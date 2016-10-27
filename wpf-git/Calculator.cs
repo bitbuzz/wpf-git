@@ -27,5 +27,15 @@ namespace wpf_git
 			}
 			return total;
 		}
+
+		public int Multiply(List<int> values)
+		{
+			int total = 0;
+			foreach (var i in values)
+			{
+				total *= i;
+			}
+			return total;
+		}
 	}
 }
