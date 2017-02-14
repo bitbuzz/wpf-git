@@ -13,8 +13,8 @@ namespace wpf_git
 	{
 		public CalculatorViewModel()
 		{
-			Value1 = "5";
-			Value2 = "6";
+			Value1 = "500";
+			Value2 = "600";
 		}
 
 		private string _value1;
