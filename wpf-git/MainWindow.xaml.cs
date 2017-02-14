@@ -23,6 +23,7 @@ namespace wpf_git
 		public MainWindow()
 		{
 			InitializeComponent();
+			DataContext = new CalculatorViewModel();
 		}
 	}
 }

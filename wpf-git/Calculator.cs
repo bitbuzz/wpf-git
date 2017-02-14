@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace wpf_git
 {
-	public class Calculator
+	public static class Calculator
 	{
-		public int Add(List<int> values)
+		public static int Add(List<int> values)
 		{
 			int total = 0;
 			foreach(var i in values)
@@ -18,7 +14,7 @@ namespace wpf_git
 			return total;
 		}
 
-		public int Subtract(List<int> values)
+		public static int Subtract(List<int> values)
 		{
 			int total = 0;
 			foreach (var i in values)
@@ -28,7 +24,7 @@ namespace wpf_git
 			return total;
 		}
 
-		public int Multiply(List<int> values)
+		public static int Multiply(List<int> values)
 		{
 			int total = 0;
 			foreach (var i in values)

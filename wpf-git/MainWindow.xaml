@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpf_git"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" 
+				SizeToContent="WidthAndHeight">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="Auto"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<TextBox x:Name="txtValue1" Grid.Row="0" Grid.Column="0" Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="200" Height="25" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
+		<TextBox x:Name="txtValue2" Grid.Row="0" Grid.Column="1" Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="200" Height="25" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
+		<Button x:Name="btnCalculate" Grid.Row="1" Grid.Column="1" Command="{Binding Path=CalculateCommand}" Width="75" Height="25" Margin="4" HorizontalAlignment="Right">Calculate</Button>
+	</Grid>
 </Window>
