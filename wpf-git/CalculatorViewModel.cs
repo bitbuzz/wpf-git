@@ -13,8 +13,8 @@ namespace wpf_git
 	{
 		public CalculatorViewModel()
 		{
-			Value1 = "5";
-			Value2 = "6";
+			Value1 = "500";
+			Value2 = "600";
 		}
 
 		private string _value1;
@@ -74,7 +74,10 @@ namespace wpf_git
 			var list = new List<int>();
 			list.Add(Convert.ToInt32(_value1));
 			list.Add(Convert.ToInt32(_value2));
-			var result = Calculator.Add(list);
+			int x = 200;
+			int y = 100;
+			list.Add(x + y);
+			var result = Calculator.Add(list) + 1;
 			MessageBox.Show(result.ToString());
 		}
 	}
