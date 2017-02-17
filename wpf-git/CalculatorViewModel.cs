@@ -77,7 +77,7 @@ namespace wpf_git
 			int x = 200;
 			int y = 100;
 			list.Add(x + y);
-			var result = Calculator.Add(list) + 1;
+			var result = Calculator.Add(list) + 2;
 			MessageBox.Show(result.ToString());
 		}
 	}
