@@ -76,9 +76,7 @@ namespace wpf_git
 			var list = new List<int>();
 			list.Add(Convert.ToInt32(_value1));
 			list.Add(Convert.ToInt32(_value2));
-			list.Add(Convert.ToInt32(_value2) + 1);
-			var result = Calculator.Add(list) + 2;
-			MessageBox.Show(result.ToString());
+			MessageBox.Show( Calculator.Add(list).ToString());
 		}
 	}
 }
