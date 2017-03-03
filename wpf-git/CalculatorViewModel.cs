@@ -73,10 +73,10 @@ namespace wpf_git
 		private void Calculate()
 		{
 			// Change the values here.
-			var list = new List<int>();
-			list.Add(Convert.ToInt32(_value1));
-			list.Add(Convert.ToInt32(_value2));
-			MessageBox.Show( Calculator.Add(list).ToString());
+			var listed = new List<int>();
+			listed.Add(Convert.ToInt32(_value1));
+			listed.Add(Convert.ToInt32(_value2));
+			MessageBox.Show( Calculator.Add(listed).ToString());
 		}
 	}
 }
