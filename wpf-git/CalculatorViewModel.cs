@@ -66,7 +66,7 @@ namespace wpf_git
 
 		private bool CanCalculate()
 		{
-			// Return true is the value.
+			// Return true
 			return true;
 		}
 
