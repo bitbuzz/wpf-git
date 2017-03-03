@@ -73,7 +73,6 @@ namespace wpf_git
 		private void Calculate()
 		{
 			// Change the values here.
-			// I'm ready for a rebase.
 			var list = new List<int>();
 			list.Add(Convert.ToInt32(_value1));
 			list.Add(Convert.ToInt32(_value2));
