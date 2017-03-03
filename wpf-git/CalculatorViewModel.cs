@@ -66,17 +66,17 @@ namespace wpf_git
 
 		private bool CanCalculate()
 		{
-			// Return true is the value.
+			// Return true is a comment
 			return true;
 		}
 
 		private void Calculate()
 		{
 			// Change the values here.
-			var list = new List<int>();
-			list.Add(Convert.ToInt32(_value1) + 2);
-			list.Add(Convert.ToInt32(_value2) + 2);
-			MessageBox.Show( Calculator.Add(list).ToString());
+			var listed = new List<int>();
+			listed.Add(Convert.ToInt32(_value1));
+			listed.Add(Convert.ToInt32(_value2));
+			MessageBox.Show( Calculator.Add(listed).ToString());
 		}
 	}
 }
