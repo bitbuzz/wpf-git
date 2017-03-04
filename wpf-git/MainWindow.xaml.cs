@@ -25,5 +25,15 @@ namespace wpf_git
 			InitializeComponent();
 			DataContext = new CalculatorViewModel();
 		}
+
+		private void Grid_MouseEnter(object sender, MouseEventArgs e)
+		{
+			
+		}
+
+		private void Grid_MouseLeave(object sender, MouseEventArgs e)
+		{
+			((CalculatorViewModel)DataContext).CloseQuickLaunch();
+		}
 	}
 }
