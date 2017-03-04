@@ -4,20 +4,53 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpf_git"
-        mc:Ignorable="d"
+				mc:Ignorable="d"
         Title="MainWindow" 
-				SizeToContent="WidthAndHeight">
+				Width="424"
+				SizeToContent="Height">
+
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition></RowDefinition>
-			<RowDefinition></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto"></ColumnDefinition>
-			<ColumnDefinition Width="Auto"></ColumnDefinition>
+			<ColumnDefinition Width="*"></ColumnDefinition>
 		</Grid.ColumnDefinitions>
-		<TextBox x:Name="txtValue1" Grid.Row="0" Grid.Column="0" Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="200" Height="25" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
-		<TextBox x:Name="txtValue2" Grid.Row="0" Grid.Column="1" Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="200" Height="25" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
-		<Button x:Name="btnCalculate" Grid.Row="1" Grid.Column="1" Command="{Binding Path=CalculateCommand}" Width="75" Height="25" Margin="4" HorizontalAlignment="Right">Calculate</Button>
+
+		<Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Canvas Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"></Canvas>
+			<TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Path=Value1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="25" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
+			<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=Value2, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Height="25" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Top"></TextBox>
+			<Button Grid.Row="1" Grid.Column="1" Command="{Binding Path=CalculateCommand}" Width="75" Height="25" Margin="4" HorizontalAlignment="Right">Calculate</Button>
+		</Grid>
+		
+		<Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="{Binding  Path=QuickLaunchHeight, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Button Grid.Row="0" Grid.Column="0" Command="{Binding Path=ToggleQuickLaunchCommand}" Height="25" Width="25" Margin="4" Content=">"></Button>
+		</Grid>
+		<!--<Grid x:Name="Grid2" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+		</Grid>-->
 	</Grid>
 </Window>
