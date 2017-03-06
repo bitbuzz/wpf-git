@@ -13,76 +13,56 @@ namespace wpf_git
 	{
 		public CalculatorViewModel()
 		{
-			Value1 = "500";
-			Value2 = "600";
-			QuickLaunchHeight = 31;
+			_dvrTimer = new System.Timers.Timer(2000);
+			_dvrTimer.AutoReset = false;
+			_dvrTimer.Elapsed += _dvrTimer_Elapsed;
+
+			_quickLaunchTimer = new System.Timers.Timer(2000);
+			_quickLaunchTimer.AutoReset = false;
+			_quickLaunchTimer.Elapsed += _quickLaunchTimer_Elapsed;
 		}
 
-		private string _value1;
-		private string _value2;
-		private double _quickLaunchHeight = 31;
+		#region Local
 
-		#region Properties 
+		private bool _isDvrCtrlPinned = true;
+		private System.Timers.Timer _dvrTimer;
+		private readonly object _dvrTimerlock = new object();
+		private string _dvrLaunchPinImage = _dvrPinImagePinned;
+		private const string _dvrPinImagePinned = @"~\..\Images\pin_pink_pinned.png";
+		private const string _dvrPinImageUnpinned = @"~\..\Images\pin_pink_unpinned.png";
 
-		public string Value1
-		{
-			get { return _value1; }
-			set
-			{
-				_value1 = value;
-				OnPropertyChanged("Value1");
-			}
-		}
+		private bool _isQuickLaunchCtrlPinned = true;
+		private System.Timers.Timer _quickLaunchTimer;
+		private readonly object _quickLaunchTimerlock = new object();
+		private string _quickLaunchPinImage = _quickLaunchPinImagePinned;
+		private const string _quickLaunchPinImagePinned = @"~\..\Images\pin_pink_pinned.png";
+		private const string _quickLaunchPinImageUnpinned = @"~\..\Images\pin_pink_unpinned.png";
 
-		public string Value2
-		{
-			get { return _value2; }
-			set
-			{
-				_value2 = value;
-				OnPropertyChanged("Value2");
-			}
-		}
+		private Visibility _dvrCtrlVisibility = Visibility.Visible;
+		private Visibility _quickLaunchCtrlVisibility = Visibility.Visible;
 
-		public double QuickLaunchHeight
-		{
-			get { return _quickLaunchHeight; }
-			set
-			{
-				_quickLaunchHeight = value;
-				OnPropertyChanged("QuickLaunchHeight");
-			}
-		}
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		protected void OnPropertyChanged(string name)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-		}
-		
 		#endregion
 
 		#region Commands
-		
-		private ICommand _calculateCommand;
 
-		public ICommand CalculateCommand
+		private ICommand _toggleDvrCommand;
+
+		public ICommand ToggleDvrCommand
 		{
 			get
 			{
-				if (_calculateCommand == null)
+				if (_toggleDvrCommand == null)
 				{
-					_calculateCommand = new RelayCommand(
-							param => Calculate(),
-							param => CanCalculate()
+					_toggleDvrCommand = new RelayCommand(
+							param => ToggleDvrCtrl(),
+							param => CanToggleDvr()
 					);
 				}
-				return _calculateCommand;
+				return _toggleDvrCommand;
 			}
 		}
 
-		private bool CanCalculate()
+		private bool CanToggleDvr()
 		{
 			// Return true
 			return true;
@@ -97,7 +77,7 @@ namespace wpf_git
 				if (_toggleQuickLaunchCommand == null)
 				{
 					_toggleQuickLaunchCommand = new RelayCommand(
-							param => ToggleQuickLaunch(),
+							param => ToggleQuickLaunchCtrl(),
 							param => CanToggleQuickLaunch()
 					);
 				}
@@ -113,36 +93,233 @@ namespace wpf_git
 
 		#endregion
 
+		#region Properties 
+
+		public Visibility DvrCtrlVisibility
+		{
+			get { return _dvrCtrlVisibility; }
+			set
+			{
+				_dvrCtrlVisibility = value;
+				OnPropertyChanged("DVRCtrlVisibility");
+			}
+		}
+
+		public Visibility QuickLaunchCtrlVisibility
+		{
+			get { return _quickLaunchCtrlVisibility; }
+			set
+			{
+				_quickLaunchCtrlVisibility = value;
+				OnPropertyChanged("QuickLaunchCtrlVisibility");
+			}
+		}
+
+		public string DvrPinImage
+		{
+			get { return _dvrLaunchPinImage; }
+			set
+			{
+				_dvrLaunchPinImage = value;
+				OnPropertyChanged("DvrPinImage");
+			}
+		}
+
+		public string QuickLaunchPinImage
+		{
+			get { return _quickLaunchPinImage; }
+			set
+			{
+				_quickLaunchPinImage = value;
+				OnPropertyChanged("QuickLaunchPinImage");
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected void OnPropertyChanged(string name)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+		}
+
+		#endregion
+
 		#region Methods
 
-		private void Calculate()
+		// DVR
+		void DvrTimerStop()
 		{
-			// Change the values here.
-			var list = new List<int>();
-			list.Add(Convert.ToInt32(_value1));
-			list.Add(Convert.ToInt32(_value2));
-			MessageBox.Show(Calculator.Add(list).ToString());
-		}
-
-		public void CloseQuickLaunch()
-		{
-			QuickLaunchHeight = 31;
-		}
-
-		public void OpenQuickLaunch()
-		{
-			QuickLaunchHeight = 31;
-		}
-
-		private void ToggleQuickLaunch()
-		{
-			if(QuickLaunchHeight == 0)
+			lock (_dvrTimerlock)
 			{
-				QuickLaunchHeight = 31;
+				_dvrTimer.Enabled = false; // equivalent to calling Stop()
+			}
+		}
+
+		public void DvrCtrlMouseEnter()
+		{
+			if (_dvrTimer.Enabled == true)
+			{
+				DvrTimerStop();
+			}
+		}
+
+		public void DvrCtrlMouseLeave()
+		{
+			if (_isDvrCtrlPinned == false)
+			{
+				DvrTimerStop();
+				_dvrTimer.Interval = 750;
+				_dvrTimer.Start();
+			}
+		}
+
+		private void ToggleDvrCtrl()
+		{
+			if (_isDvrCtrlPinned == false)
+			{
+				DvrCtrlVisibility = Visibility.Visible;
+				_isDvrCtrlPinned = true;
+				DvrPinImage = _dvrPinImagePinned;
 			}
 			else
 			{
-				QuickLaunchHeight = 0;
+				DvrCtrlVisibility = Visibility.Collapsed;
+				_isQuickLaunchCtrlPinned = false;
+				DvrPinImage = _dvrPinImagePinned;
+			}
+		}
+
+		public void TryCloseDvrCtr()
+		{
+			if (DvrCtrlVisibility == Visibility.Visible)
+			{
+				DvrCtrlVisibility = Visibility.Collapsed;
+			}
+		}
+
+		public void TryOpenDvrCtrl()
+		{
+			if (DvrCtrlVisibility == Visibility.Collapsed)
+			{
+				DvrCtrlVisibility = Visibility.Visible;
+
+				_isDvrCtrlPinned = false;
+				DvrPinImage = _quickLaunchPinImageUnpinned;
+				DvrTimerStop();
+				_dvrTimer.Interval = 2000;
+				_dvrTimer.Start();
+			}
+		}
+
+		// Quick Launch Toolbar
+		void QuickLaunchTimerStop()
+		{
+			lock (_quickLaunchTimerlock)
+			{
+				_quickLaunchTimer.Enabled = false; // equivalent to calling Stop()
+			}
+		}
+
+		public void QuickLaunchCtrlMouseEnter()
+		{
+			if (_quickLaunchTimer.Enabled == true)
+			{
+				QuickLaunchTimerStop();
+			}
+		}
+
+		public void QuickLaunchCtrlMouseLeave()
+		{
+			if (_isQuickLaunchCtrlPinned == false)
+			{
+				QuickLaunchTimerStop();
+				_quickLaunchTimer.Interval = 750;
+				_quickLaunchTimer.Start();
+			}
+		}
+
+		private void ToggleQuickLaunchCtrl()
+		{
+			if (_isQuickLaunchCtrlPinned == false)
+			{
+				QuickLaunchCtrlVisibility = Visibility.Visible;
+				_isQuickLaunchCtrlPinned = true;
+				QuickLaunchPinImage = _quickLaunchPinImagePinned;
+			}
+			else
+			{
+				QuickLaunchCtrlVisibility = Visibility.Collapsed;
+				_isQuickLaunchCtrlPinned = false;
+				QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
+			}
+		}
+
+		public void TryCloseQuickLaunchCtr()
+		{
+			if (QuickLaunchCtrlVisibility == Visibility.Visible)
+			{
+				QuickLaunchCtrlVisibility = Visibility.Collapsed;
+			}
+		}
+
+		public void TryOpenQuickLaunchCtrl()
+		{
+			if (QuickLaunchCtrlVisibility == Visibility.Collapsed)
+			{
+				QuickLaunchCtrlVisibility = Visibility.Visible;
+				_isQuickLaunchCtrlPinned = false;
+				QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
+				_quickLaunchTimer.Stop();
+				_quickLaunchTimer.Interval = 2000;
+				_quickLaunchTimer.Start();
+			}
+		}
+
+		#endregion
+
+		#region Events
+
+		private void _dvrTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			lock (_dvrTimerlock)
+			{
+				if (_isDvrCtrlPinned == false)
+				{
+					DvrCtrlVisibility = Visibility.Collapsed;
+					DvrPinImage = _dvrPinImageUnpinned;
+				}
+				else
+				{
+					DvrCtrlVisibility = Visibility.Visible;
+					DvrPinImage = _dvrPinImagePinned;
+				}
+
+				if (_dvrTimer.Enabled == false)
+				{
+					return;
+				}
+			}
+		}
+
+		private void _quickLaunchTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+		{
+			lock (_quickLaunchTimerlock)
+			{
+				if (_isQuickLaunchCtrlPinned == false)
+				{
+					QuickLaunchCtrlVisibility = Visibility.Collapsed;
+					QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
+				}
+				else
+				{
+					QuickLaunchCtrlVisibility = Visibility.Visible;
+					QuickLaunchPinImage = _quickLaunchPinImagePinned;
+				}
+
+				if (_quickLaunchTimer.Enabled == false)
+				{
+					return;
+				}
 			}
 		}
 
