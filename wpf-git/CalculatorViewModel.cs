@@ -161,6 +161,10 @@ namespace wpf_git
 			{
 				DvrTimerStop();
 			}
+			if (_quickLaunchTimer.Enabled == true)
+			{
+				QuickLaunchTimerStop();
+			}
 		}
 
 		public void DvrCtrlMouseLeave()
@@ -170,6 +174,12 @@ namespace wpf_git
 				DvrTimerStop();
 				_dvrTimer.Interval = 750;
 				_dvrTimer.Start();
+			}
+			if (_isQuickLaunchCtrlPinned == false)
+			{
+				QuickLaunchTimerStop();
+				_quickLaunchTimer.Interval = 750;
+				_quickLaunchTimer.Start();
 			}
 		}
 
@@ -226,6 +236,10 @@ namespace wpf_git
 			{
 				QuickLaunchTimerStop();
 			}
+			if (_dvrTimer.Enabled == true)
+			{
+				DvrTimerStop();
+			}
 		}
 
 		public void QuickLaunchCtrlMouseLeave()
@@ -235,6 +249,12 @@ namespace wpf_git
 				QuickLaunchTimerStop();
 				_quickLaunchTimer.Interval = 750;
 				_quickLaunchTimer.Start();
+			}
+			if (_isDvrCtrlPinned == false)
+			{
+				DvrTimerStop();
+				_dvrTimer.Interval = 750;
+				_dvrTimer.Start();
 			}
 		}
 
