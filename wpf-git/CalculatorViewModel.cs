@@ -115,6 +115,26 @@ namespace wpf_git
 			}
 		}
 
+		public bool IsDvrCtrlPinned
+		{
+			get { return _isDvrCtrlPinned; }
+			set
+			{
+				_isDvrCtrlPinned = value;
+				OnPropertyChanged("IsDvrCtrlPinned");
+			}
+		}
+
+		public bool IsQuickLaunchCtrlPinned
+		{
+			get { return _isQuickLaunchCtrlPinned; }
+			set
+			{
+				_isQuickLaunchCtrlPinned = value;
+				OnPropertyChanged("IsQuickLaunchCtrlPinned");
+			}
+		}
+
 		public string DvrPinImage
 		{
 			get { return _dvrLaunchPinImage; }

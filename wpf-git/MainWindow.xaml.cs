@@ -25,15 +25,27 @@ namespace wpf_git
 		public MainWindow()
 		{
 			InitializeComponent();
-			WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			DataContext = new CalculatorViewModel();
-			_isWindowInitialized = true;
 		}
 
 		private void Video_MouseEnter(object sender, MouseEventArgs e)
 		{
 			((CalculatorViewModel)DataContext).TryOpenQuickLaunchCtrl();
 			((CalculatorViewModel)DataContext).TryOpenDvrCtrl();
+
+			//if(((CalculatorViewModel)DataContext).IsQuickLaunchCtrlPinned)
+			//{
+			//	QuickLaunchCtrlBorder.SetValue(Grid.RowProperty, 1);
+			//	DvrCtrlBorder.SetValue(Grid.RowProperty, 2);
+			//	SlowMotionCtrlGrid.SetValue(Grid.RowProperty, 3);
+			//}
+			//else
+			//{
+			//	QuickLaunchCtrlBorder.SetValue(Grid.RowProperty, 0);
+			//	DvrCtrlBorder.SetValue(Grid.RowProperty, 1);
+			//	SlowMotionCtrlGrid.SetValue(Grid.RowProperty, 2);
+			//}
 		}
 
 		private void QuickLaunch_MouseEnter(object sender, MouseEventArgs e)
@@ -62,11 +74,11 @@ namespace wpf_git
 			double val;			
 			if(((Border)sender).Visibility == Visibility.Collapsed)
 			{
-				val = ActualHeight - 33;
+				val = ActualHeight - 35;
 			}
 			else
 			{
-				val = ActualHeight + 33;
+				val = ActualHeight + 35;
 			}
 			if (val < 0) return;
 			Height = val;
@@ -86,6 +98,13 @@ namespace wpf_git
 			}
 			if (val < 0) return;
 			Height = val;
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			Width = 450;
+			Height = 457;
+			_isWindowInitialized = true;
 		}
 	}
 }

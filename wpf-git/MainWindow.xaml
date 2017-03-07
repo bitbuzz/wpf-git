@@ -5,77 +5,83 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpf_git"
 				mc:Ignorable="d"
-        Title="MainWindow"
-				SizeToContent="WidthAndHeight">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
-
-		<Grid Grid.Row="0" Grid.Column="0" >
-			<Image Source="Images\video_384x288.jpg" MouseEnter="Video_MouseEnter"/> 
-		</Grid>
-
-		<Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="0" Margin="0,0,0,0" IsVisibleChanged="quickLaunchVisibility_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-			<Grid Background="Transparent" MouseEnter="QuickLaunch_MouseEnter" MouseLeave="QuickLaunch_MouseLeave">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-				</Grid.ColumnDefinitions>
-				<Button Grid.Row="0" Grid.Column="1" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 1</Button>
-				<Button Grid.Row="0" Grid.Column="2" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 2</Button>
-				<Button Grid.Row="0" Grid.Column="3" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 3</Button>
-				<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" Margin="1,0,0,0">
-					<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
-				</Button>
-		</Grid>
-		</Border>
-
-		<Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="0" IsVisibleChanged="dvrVisibility_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-			<Grid x:Name="visibility" Background="Transparent" MouseEnter="Dvr_MouseEnter" MouseLeave="Dvr_MouseLeave">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Button Grid.Row="1" Grid.Column="1" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;&lt; "></Button>
-				<Button Grid.Row="1" Grid.Column="2" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt; "></Button>
-				<Button Grid.Row="1" Grid.Column="3" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;&gt; "></Button>
-				<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" Margin="1,0,0,0">
-					<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
-				</Button>
-			</Grid>
-		</Border>
-
-		<Grid Grid.Row="3" Grid.Column="0">
+				UseLayoutRounding="True"
+        d:DesignHeight="400" 
+        d:DesignWidth="377"
+				Loaded="Window_Loaded"
+        Title="MainWindow">
+	<!--Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=Width}" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=Height}"-->
+	<Canvas x:Name="LayoutRoot">
+		<Grid Canvas.Left="0" Canvas.Top="0" Margin="0" Width="{Binding ActualWidth, ElementName=LayoutRoot}" Height="{Binding ActualHeight, ElementName=LayoutRoot}">
 			<Grid.RowDefinitions>
+				<RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
 				<RowDefinition Height="Auto"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
-			<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Sep. 19, 2012 14:15:50</TextBlock>
-			<Slider Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="125" Value="4" Margin="2"/>
-			<TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">-104.991367, 40.739472</TextBlock>
+
+			<Border Grid.Row="0" Grid.Column="0" BorderBrush="Red" BorderThickness="1" Margin="0">
+				<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseEnter="Video_MouseEnter" Margin="0"/>
+			</Border>
+
+			<Border x:Name="QuickLaunchCtrlBorder" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsVisibleChanged="quickLaunchVisibility_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+				<Grid Background="Transparent" MouseEnter="QuickLaunch_MouseEnter" MouseLeave="QuickLaunch_MouseLeave">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<Button Grid.Row="0" Grid.Column="1" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 1</Button>
+					<Button Grid.Row="0" Grid.Column="2" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 2</Button>
+					<Button Grid.Row="0" Grid.Column="3" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 3</Button>
+					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
+					</Button>
+				</Grid>
+			</Border>
+
+			<Border x:Name="DvrCtrlBorder" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsVisibleChanged="dvrVisibility_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+				<Grid x:Name="visibility" Background="Transparent" MouseEnter="Dvr_MouseEnter" MouseLeave="Dvr_MouseLeave">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Button Grid.Row="1" Grid.Column="1" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;&lt; "></Button>
+					<Button Grid.Row="1" Grid.Column="2" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt; "></Button>
+					<Button Grid.Row="1" Grid.Column="3" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;&gt; "></Button>
+					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
+						<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
+					</Button>
+				</Grid>
+			</Border>
+
+			<Grid x:Name="SlowMotionCtrlGrid" Grid.Row="3" Grid.Column="0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Sep. 19, 2012 14:15:50</TextBlock>
+				<Slider Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="125" Value="4" Margin="2"/>
+				<TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">-104.991367, 40.739472</TextBlock>
+			</Grid>
 		</Grid>
-	</Grid>
+	</Canvas>
 </Window>
