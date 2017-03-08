@@ -11,7 +11,7 @@ namespace wpf_git
 {
 	public class CalculatorViewModel : INotifyPropertyChanged
 	{
-		// 1 + 2 = 3
+		// Testing comments...
 		public CalculatorViewModel()
 		{
 			DvrCtrlVisibility = Visibility.Visible;
