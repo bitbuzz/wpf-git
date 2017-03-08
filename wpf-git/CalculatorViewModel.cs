@@ -154,37 +154,14 @@ namespace wpf_git
 				{
 					_tryOpenQuickLaunchCommand = new RelayCommand(
 							param => TryOpenQuickLaunchCtrl(),
-							param => TryOpenQuickLaunch()
+							param => CanTryOpenQuickLaunch()
 					);
 				}
 				return _tryOpenQuickLaunchCommand;
 			}
 		}
 
-		private bool TryOpenQuickLaunch()
-		{
-			// Return true
-			return true;
-		}
-
-		private ICommand _tryOpenDvrAndQuickLaunchCommand;
-
-		public ICommand TryOpenDvrAndQuickLaunchCommand
-		{
-			get
-			{
-				if (_tryOpenDvrAndQuickLaunchCommand == null)
-				{
-					_tryOpenDvrAndQuickLaunchCommand = new RelayCommand(
-							param => TryOpenDvrAndQuickLaunchCtrls(),
-							param => CanTryOpenDvrAndQuickLaunch()
-					);
-				}
-				return _tryOpenDvrAndQuickLaunchCommand;
-			}
-		}
-
-		private bool CanTryOpenDvrAndQuickLaunch()
+		private bool CanTryOpenQuickLaunch()
 		{
 			// Return true
 			return true;
