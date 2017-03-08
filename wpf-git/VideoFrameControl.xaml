@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:wpf_git"
-						 UseLayoutRounding="True"
+						 UseLayoutRounding="False"
              mc:Ignorable="d">
 	<Grid>
 		<Image x:Name="VideoFrame" Stretch="Uniform" Source="pack://application:,,,/wpf-git;component/Images\video_384x288.jpg" />
