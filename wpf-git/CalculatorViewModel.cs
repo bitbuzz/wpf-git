@@ -13,6 +13,7 @@ namespace wpf_git
 	{
 
 		//Testing comment.
+		//Testing comment master.
 
 		public CalculatorViewModel()
 		{
