@@ -33,19 +33,6 @@ namespace wpf_git
 		{
 			((CalculatorViewModel)DataContext).TryOpenQuickLaunchCtrl();
 			((CalculatorViewModel)DataContext).TryOpenDvrCtrl();
-
-			//if(((CalculatorViewModel)DataContext).IsQuickLaunchCtrlPinned)
-			//{
-			//	QuickLaunchCtrlBorder.SetValue(Grid.RowProperty, 1);
-			//	DvrCtrlBorder.SetValue(Grid.RowProperty, 2);
-			//	SlowMotionCtrlGrid.SetValue(Grid.RowProperty, 3);
-			//}
-			//else
-			//{
-			//	QuickLaunchCtrlBorder.SetValue(Grid.RowProperty, 0);
-			//	DvrCtrlBorder.SetValue(Grid.RowProperty, 1);
-			//	SlowMotionCtrlGrid.SetValue(Grid.RowProperty, 2);
-			//}
 		}
 
 		private void QuickLaunch_MouseEnter(object sender, MouseEventArgs e)

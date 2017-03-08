@@ -10,6 +10,9 @@
         d:DesignWidth="377"
 				Loaded="Window_Loaded"
         Title="MainWindow">
+	<Window.InputBindings>
+		<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding TryOpenDvrAndQuickLaunchCommand}"/>
+	</Window.InputBindings>
 	<Canvas x:Name="LayoutRoot">
 		<Grid Canvas.Left="0" Canvas.Top="0" Margin="0" Width="{Binding ActualWidth, ElementName=LayoutRoot}" Height="{Binding ActualHeight, ElementName=LayoutRoot}">
 			<Grid.RowDefinitions>
@@ -24,7 +27,7 @@
 
 			<Border Grid.Row="0" Grid.Column="0" BorderBrush="Red" BorderThickness="2" Margin="0">
 				<Grid>
-					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" />
 					<Canvas Height="50" Width="50" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.33"></Canvas>
 				</Grid>
 			</Border>
