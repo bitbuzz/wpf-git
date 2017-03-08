@@ -10,6 +10,10 @@
         d:DesignWidth="377"
 				Loaded="Window_Loaded"
         Title="MainWindow">
+	<Window.Resources>
+
+	</Window.Resources>
+	
 	<!--Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=Width}" Height="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}, Path=Height}"-->
 	<Canvas x:Name="LayoutRoot">
 		<Grid Canvas.Left="0" Canvas.Top="0" Margin="0" Width="{Binding ActualWidth, ElementName=LayoutRoot}" Height="{Binding ActualHeight, ElementName=LayoutRoot}">
@@ -24,10 +28,37 @@
 			</Grid.ColumnDefinitions>
 
 			<Border Grid.Row="0" Grid.Column="0" BorderBrush="Red" BorderThickness="1" Margin="0">
-				<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MouseEnter="Video_MouseEnter" Margin="0"/>
+				<Grid>
+					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0"/>
+					<Canvas Height="50" Width="50" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.33"></Canvas>
+				</Grid>
 			</Border>
 
+			<!--<EventSetter Event="Completed" Handler="DoubleAnimation_Completed"></EventSetter>-->
+
 			<Border x:Name="QuickLaunchCtrlBorder" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsVisibleChanged="quickLaunchVisibility_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+				<!--<Border.Style>
+					<Style TargetType="Border">
+						<Style.Triggers>
+							<Trigger Property="IsMouseOver" Value="True">
+								<Trigger.EnterActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetProperty="Opacity" From="1.0" To="0" Duration="0:0:2" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.EnterActions>
+								<Trigger.ExitActions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:1" />
+										</Storyboard>
+									</BeginStoryboard>
+								</Trigger.ExitActions>
+							</Trigger>
+						</Style.Triggers>
+					</Style>
+				</Border.Style>-->
 				<Grid Background="Transparent" MouseEnter="QuickLaunch_MouseEnter" MouseLeave="QuickLaunch_MouseLeave">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
@@ -42,7 +73,7 @@
 					<Button Grid.Row="0" Grid.Column="1" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 1</Button>
 					<Button Grid.Row="0" Grid.Column="2" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 2</Button>
 					<Button Grid.Row="0" Grid.Column="3" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 3</Button>
-					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+					<Button x:Name="DvrCtrlPinButton" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
 						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
 					</Button>
 				</Grid>
@@ -66,6 +97,7 @@
 					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
 						<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
 					</Button>
+					<!--<Image Source="pack://application:,,,/wpf-git;component/Images/playControls.png"></Image>-->
 				</Grid>
 			</Border>
 
