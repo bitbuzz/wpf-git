@@ -103,16 +103,8 @@ namespace wpf_git
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			Width = 450;
-			Height = 457;
+			Height = 458;
 			_isWindowInitialized = true;
-		}
-
-		private void DoubleAnimation_Completed(object sender, EventArgs e)
-		{
-			if(((CalculatorViewModel)DataContext).ToggleQuickLaunchCommand.CanExecute(null))
-			{
-				((CalculatorViewModel)DataContext).ToggleQuickLaunchCommand.Execute(null);
-			}
 		}
 	}
 }

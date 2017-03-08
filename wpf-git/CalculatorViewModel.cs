@@ -13,6 +13,11 @@ namespace wpf_git
 	{
 		public CalculatorViewModel()
 		{
+			DvrCtrlVisibility = Visibility.Visible;
+			QuickLaunchCtrlVisibility = Visibility.Visible;
+			IsDvrCtrlPinned = true;
+			IsQuickLaunchCtrlPinned = true;
+
 			_dvrTimer = new System.Timers.Timer(2000);
 			_dvrTimer.AutoReset = false;
 			_dvrTimer.Elapsed += _dvrTimer_Elapsed;
@@ -189,13 +194,14 @@ namespace wpf_git
 
 		public void DvrCtrlMouseLeave()
 		{
-			if (_isDvrCtrlPinned == false)
+			if (IsDvrCtrlPinned == false)
 			{
 				DvrTimerStop();
 				_dvrTimer.Interval = 750;
 				_dvrTimer.Start();
 			}
-			if (_isQuickLaunchCtrlPinned == false)
+
+			if (IsQuickLaunchCtrlPinned == false)
 			{
 				QuickLaunchTimerStop();
 				_quickLaunchTimer.Interval = 750;
@@ -214,7 +220,7 @@ namespace wpf_git
 			else
 			{
 				DvrCtrlVisibility = Visibility.Collapsed;
-				_isQuickLaunchCtrlPinned = false;
+				_isDvrCtrlPinned = false;
 				DvrPinImage = _dvrPinImagePinned;
 			}
 		}
