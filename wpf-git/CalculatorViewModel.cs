@@ -11,7 +11,7 @@ namespace wpf_git
 {
 	public class CalculatorViewModel : INotifyPropertyChanged
 	{
-		// Comments from master.
+		// Comments from 100
 		public CalculatorViewModel()
 		{
 			// More comments from master.
