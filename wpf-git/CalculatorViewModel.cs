@@ -18,11 +18,11 @@ namespace wpf_git
 			IsDvrCtrlPinned = true;
 			IsQuickLaunchCtrlPinned = true;
 
-			_dvrTimer = new System.Timers.Timer(2000);
+			_dvrTimer = new System.Timers.Timer(_ctrlVisibilityTimer);
 			_dvrTimer.AutoReset = false;
 			_dvrTimer.Elapsed += _dvrTimer_Elapsed;
 
-			_quickLaunchTimer = new System.Timers.Timer(2000);
+			_quickLaunchTimer = new System.Timers.Timer(_ctrlVisibilityTimer);
 			_quickLaunchTimer.AutoReset = false;
 			_quickLaunchTimer.Elapsed += _quickLaunchTimer_Elapsed;
 		}
@@ -42,6 +42,8 @@ namespace wpf_git
 		private string _quickLaunchPinImage = _quickLaunchPinImagePinned;
 		private const string _quickLaunchPinImagePinned = @"~\..\Images\pin_pink_pinned.png";
 		private const string _quickLaunchPinImageUnpinned = @"~\..\Images\pin_pink_unpinned.png";
+
+		private double _ctrlVisibilityTimer = 2000;
 
 		private Visibility _dvrCtrlVisibility = Visibility.Visible;
 		private Visibility _quickLaunchCtrlVisibility = Visibility.Visible;
@@ -95,7 +97,53 @@ namespace wpf_git
 			// Return true
 			return true;
 		}
-		
+
+		private ICommand _tryOpenDvrCommand;
+
+		public ICommand TryOpenDvrCommand
+		{
+			get
+			{
+				if (_tryOpenDvrCommand == null)
+				{
+					_tryOpenDvrCommand = new RelayCommand(
+							param => TryOpenDvrCtrl(),
+							param => CanTryOpenDvr()
+					);
+				}
+				return _tryOpenDvrCommand;
+			}
+		}
+
+		private bool CanTryOpenDvr()
+		{
+			// Return true
+			return true;
+		}
+
+		private ICommand _tryOpenQuickLaunchCommand;
+
+		public ICommand TryOpenQuickLaunchCommand
+		{
+			get
+			{
+				if (_tryOpenQuickLaunchCommand == null)
+				{
+					_tryOpenQuickLaunchCommand = new RelayCommand(
+							param => TryOpenQuickLaunchCtrl(),
+							param => TryOpenQuickLaunch()
+					);
+				}
+				return _tryOpenQuickLaunchCommand;
+			}
+		}
+
+		private bool TryOpenQuickLaunch()
+		{
+			// Return true
+			return true;
+		}
+
 		private ICommand _tryOpenDvrAndQuickLaunchCommand;
 
 		public ICommand TryOpenDvrAndQuickLaunchCommand
@@ -254,7 +302,7 @@ namespace wpf_git
 			}
 		}
 
-		public void TryCloseDvrCtr()
+		public void TryCloseDvrCtrl()
 		{
 			if (DvrCtrlVisibility == Visibility.Visible)
 			{
@@ -271,7 +319,7 @@ namespace wpf_git
 				_isDvrCtrlPinned = false;
 				DvrPinImage = _quickLaunchPinImageUnpinned;
 				DvrTimerStop();
-				_dvrTimer.Interval = 2000;
+				_dvrTimer.Interval = _ctrlVisibilityTimer;
 				_dvrTimer.Start();
 			}
 		}
@@ -345,7 +393,7 @@ namespace wpf_git
 				_isQuickLaunchCtrlPinned = false;
 				QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
 				_quickLaunchTimer.Stop();
-				_quickLaunchTimer.Interval = 2000;
+				_quickLaunchTimer.Interval = _ctrlVisibilityTimer;
 				_quickLaunchTimer.Start();
 			}
 		}

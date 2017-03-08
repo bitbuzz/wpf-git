@@ -11,6 +11,8 @@
 				Loaded="Window_Loaded"
         Title="MainWindow">
 	<Window.InputBindings>
+		<KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding TryOpenDvrCommand}"/>
+		<KeyBinding Gesture="Ctrl+Shift+F" Command="{Binding TryOpenQuickLaunchCommand}"/>
 		<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding TryOpenDvrAndQuickLaunchCommand}"/>
 	</Window.InputBindings>
 	<Canvas x:Name="LayoutRoot">
@@ -47,12 +49,12 @@
 					<Button Grid.Row="0" Grid.Column="1" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 1</Button>
 					<Button Grid.Row="0" Grid.Column="2" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 2</Button>
 					<Button Grid.Row="0" Grid.Column="3" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 3</Button>
-					<Button x:Name="DvrCtrlPinButton" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+					<Button x:Name="DvrCtrlPinButton" Grid.Row="0" Grid.Column="0" ToolTip="Press Ctrl+Shift+F or Ctrl+Shift+S to open." HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
 						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
 					</Button>
 				</Grid>
 			</Border>
-
+						
 			<Border x:Name="DvrCtrlBorder" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsVisibleChanged="dvrVisibility_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
 				<Grid x:Name="visibility" Background="Transparent" MouseEnter="Dvr_MouseEnter" MouseLeave="Dvr_MouseLeave">
 					<Grid.RowDefinitions>
@@ -68,7 +70,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
+					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" ToolTip="Press Ctrl+Shift+D or Ctrl+Shift+S to open." VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
 						<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
 					</Button>
 					<TextBlock Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">02:24 / 10:00</TextBlock>
