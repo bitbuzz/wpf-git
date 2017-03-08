@@ -11,10 +11,6 @@ namespace wpf_git
 {
 	public class CalculatorViewModel : INotifyPropertyChanged
 	{
-
-		//Testing comment.
-		//Testing comment master.
-
 		public CalculatorViewModel()
 		{
 			DvrCtrlVisibility = Visibility.Visible;
