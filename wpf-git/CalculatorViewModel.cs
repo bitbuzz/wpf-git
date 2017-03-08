@@ -13,7 +13,6 @@ namespace wpf_git
 	{
 		public CalculatorViewModel()
 		{
-			// Some comments to develop.
 			DvrCtrlVisibility = Visibility.Visible;
 			QuickLaunchCtrlVisibility = Visibility.Visible;
 			IsDvrCtrlPinned = true;
