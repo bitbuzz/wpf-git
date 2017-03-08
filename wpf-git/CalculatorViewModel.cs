@@ -100,6 +100,29 @@ namespace wpf_git
 			// Return true
 			return true;
 		}
+		
+		private ICommand _tryOpenDvrAndQuickLaunchCommand;
+
+		public ICommand TryOpenDvrAndQuickLaunchCommand
+		{
+			get
+			{
+				if (_tryOpenDvrAndQuickLaunchCommand == null)
+				{
+					_tryOpenDvrAndQuickLaunchCommand = new RelayCommand(
+							param => TryOpenDvrAndQuickLaunchCtrls(),
+							param => CanTryOpenDvrAndQuickLaunch()
+					);
+				}
+				return _tryOpenDvrAndQuickLaunchCommand;
+			}
+		}
+
+		private bool CanTryOpenDvrAndQuickLaunch()
+		{
+			// Return true
+			return true;
+		}
 
 		private ICommand _tryOpenDvrCommand;
 
