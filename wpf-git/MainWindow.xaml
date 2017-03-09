@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:wpf_git"
 				mc:Ignorable="d"
 				UseLayoutRounding="True"
-        d:DesignHeight="401" 
-        d:DesignWidth="377"
+        d:DesignHeight="451" 
+        d:DesignWidth="455"
 				Loaded="Window_Loaded"
         Title="MainWindow">
 	<Window.InputBindings>
@@ -30,14 +30,13 @@
 			<Border Grid.Row="0" Grid.Column="0" BorderBrush="Red" BorderThickness="2" Margin="0">
 				<Grid>
 					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" />
-					<Canvas Height="50" Width="50" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.33"></Canvas>
+					<Canvas Height="25" Width="25" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.25"/>
 				</Grid>
 			</Border>
 
-			<Border x:Name="QuickLaunchCtrlBorder" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsVisibleChanged="quickLaunchVisibility_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+			<Border x:Name="QuickLaunchCtrlBorder" Grid.Row="1" Grid.Column="0" BorderBrush="Black" Background="#eff2f7" BorderThickness="0" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsVisibleChanged="quickLaunchVisibility_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
 				<Grid Background="Transparent" MouseEnter="QuickLaunch_MouseEnter" MouseLeave="QuickLaunch_MouseLeave">
 					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
 					<Grid.ColumnDefinitions>
@@ -45,17 +44,32 @@
 						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.Column="1" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 1</Button>
-					<Button Grid.Row="0" Grid.Column="2" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 2</Button>
-					<Button Grid.Row="0" Grid.Column="3" Height="25" Margin="2,4,2,4" Background="Transparent" >btn 3</Button>
-					<Button x:Name="DvrCtrlPinButton" Grid.Row="0" Grid.Column="0" ToolTip="Press Ctrl+Shift+F or Ctrl+Shift+S to open." HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+					<Button Grid.Row="0" Grid.Column="1" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonBlack16.png" Height="16" Width="16" />
+					</Button>
+					<Button Grid.Row="0" Grid.Column="2" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonBlue16.png" Height="16" Width="16" />
+					</Button>
+					<Button Grid.Row="0" Grid.Column="3" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonGrey16.png" Height="16" Width="16" />
+					</Button>
+					<Button Grid.Row="0" Grid.Column="4" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonOrange16.png" Height="16" Width="16" />
+					</Button>
+					<Button Grid.Row="0" Grid.Column="5" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
+						<!--"{DynamicResource {x:Static SystemColors.ControlBrushKey}}">-->
+						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonRed16.png" Height="16" Width="16" />
+					</Button>
+					<Button x:Name="DvrCtrlPinButton" Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Ctrl+Shift+F to open tools." HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
 						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
 					</Button>
 				</Grid>
 			</Border>
 						
-			<Border x:Name="DvrCtrlBorder" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsVisibleChanged="dvrVisibility_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+			<Border x:Name="DvrCtrlBorder" Grid.Row="2" Grid.Column="0" BorderBrush="Transparent" BorderThickness="0" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsVisibleChanged="dvrVisibility_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
 				<Grid x:Name="visibility" Background="Transparent" MouseEnter="Dvr_MouseEnter" MouseLeave="Dvr_MouseLeave">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
@@ -67,32 +81,49 @@
 						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
+						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" ToolTip="Press Ctrl+Shift+D or Ctrl+Shift+S to open." VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
+					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Ctrl+Shift+D to open DVR." Margin="1,0,0,0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
 						<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
 					</Button>
 					<TextBlock Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">02:24 / 10:00</TextBlock>
-					<Button Grid.Row="1" Grid.Column="3" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;&lt; "></Button>
-					<Button Grid.Row="1" Grid.Column="4" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt; "></Button>
-					<Button Grid.Row="1" Grid.Column="5" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;&gt; "></Button>
-					<TextBlock Grid.Row="1" Grid.Column="7" Margin="0,0,4,0" HorizontalAlignment="Right" VerticalAlignment="Center">Play Speed: 1</TextBlock>
+					<Button Grid.Row="1" Grid.Column="3" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" |&lt; "></Button>
+					<Button Grid.Row="1" Grid.Column="4" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;&lt; "></Button>
+					<Button Grid.Row="1" Grid.Column="5" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;-"></Button>
+					<Button Grid.Row="1" Grid.Column="6" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt; "></Button>
+					<Button Grid.Row="1" Grid.Column="7" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" -&gt; "></Button>
+					<Button Grid.Row="1" Grid.Column="8" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;&gt; "></Button>
+					<Button Grid.Row="1" Grid.Column="9" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;| "></Button>
+					<TextBlock Grid.Row="1" Grid.Column="11" Margin="0,0,4,0" HorizontalAlignment="Right" VerticalAlignment="Center">Play Speed: 1</TextBlock>
 				</Grid>
 			</Border>
 
-			<Grid x:Name="SlowMotionCtrlGrid" Grid.Row="3" Grid.Column="0">
+			<Grid x:Name="GeneralCtrlsGrid" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" MouseEnter="GeneralCtrlsGrid_MouseEnter" MouseLeave="GeneralCtrlsGrid_MouseLeave">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="Auto"/>
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0">Sep. 19, 2012 14:15:50</TextBlock>
-				<Slider Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" Width="125" Value="4" Margin="2"/>
-				<TextBlock Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,4,0">-104.991367, 40.739472</TextBlock>
+
+				<!--TryOpenDvrAndQuickLaunchCommand-->
+				<!--ToggleDvrAndQuickLaunchCommand need more logic, ctrl can be open, closed, pinned, and unpinned-->
+				<Button Grid.Column="0" Grid.Row="0" ToolTip="Ctrl+Shift+S to open DVR and tools." HorizontalAlignment="Left" Margin="1,2,0,0" Command="{Binding Path=TryOpenDvrAndQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
+					<Image Source="pack://application:,,,/wpf-git;component/Images\open_expanders.png" Height="12" Width="12" />
+				</Button>
+				<TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0">Sep. 19, 2012 14:15:50</TextBlock>
+				<Slider Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="125" Value="5" Margin="2"/>
+				<TextBlock Grid.Column="5" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0">-104.991367, 40.739472</TextBlock>
 			</Grid>
 		</Grid>
 	</Canvas>

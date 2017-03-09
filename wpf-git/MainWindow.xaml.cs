@@ -20,39 +20,51 @@ namespace wpf_git
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private double _dvrToolbarHeight = 33;
+		private double _quickLaunchToolbarHeight = 29;
 		private bool _isWindowInitialized = false;
 
 		public MainWindow()
 		{
 			InitializeComponent();
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
-			DataContext = new CalculatorViewModel();
+			DataContext = new VideoViewModel();
 		}
 
 		private void Video_MouseEnter(object sender, MouseEventArgs e)
 		{
-			((CalculatorViewModel)DataContext).TryOpenQuickLaunchCtrl();
-			((CalculatorViewModel)DataContext).TryOpenDvrCtrl();
+			((VideoViewModel)DataContext).TryOpenQuickLaunchCtrl();
+			((VideoViewModel)DataContext).TryOpenDvrCtrl();
 		}
 
 		private void QuickLaunch_MouseEnter(object sender, MouseEventArgs e)
 		{
-			((CalculatorViewModel)DataContext).QuickLaunchCtrlMouseEnter();
+			((VideoViewModel)DataContext).QuickLaunchCtrlMouseEnter();
 		}
 
 		private void QuickLaunch_MouseLeave(object sender, MouseEventArgs e)
 		{
-			((CalculatorViewModel)DataContext).QuickLaunchCtrlMouseLeave();
+			((VideoViewModel)DataContext).QuickLaunchCtrlMouseLeave();
 		}
 
 		private void Dvr_MouseEnter(object sender, MouseEventArgs e)
 		{
-			((CalculatorViewModel)DataContext).DvrCtrlMouseEnter();
+			((VideoViewModel)DataContext).DvrCtrlMouseEnter();
 		}
 
 		private void Dvr_MouseLeave(object sender, MouseEventArgs e)
 		{
-			((CalculatorViewModel)DataContext).DvrCtrlMouseLeave();
+			((VideoViewModel)DataContext).DvrCtrlMouseLeave();
+		}
+
+		private void GeneralCtrlsGrid_MouseEnter(object sender, MouseEventArgs e)
+		{
+			((VideoViewModel)DataContext).GeneralCtrlsMouseEnter();
+		}
+
+		private void GeneralCtrlsGrid_MouseLeave(object sender, MouseEventArgs e)
+		{
+			((VideoViewModel)DataContext).GeneralCtrlsMouseLeave();
 		}
 
 		private void dvrVisibility_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -61,11 +73,11 @@ namespace wpf_git
 			double val;			
 			if(((Border)sender).Visibility == Visibility.Collapsed)
 			{
-				val = ActualHeight - 35;
+				val = ActualHeight - _dvrToolbarHeight;
 			}
 			else
 			{
-				val = ActualHeight + 35;
+				val = ActualHeight + _dvrToolbarHeight;
 			}
 			if (val < 0) return;
 			Height = val;
@@ -77,11 +89,11 @@ namespace wpf_git
 			double val;
 			if (((Border)sender).Visibility == Visibility.Collapsed)
 			{
-				val = ActualHeight - 35;
+				val = ActualHeight - _quickLaunchToolbarHeight;
 			}
 			else
 			{
-				val = ActualHeight + 35;
+				val = ActualHeight + _quickLaunchToolbarHeight;
 			}
 			if (val < 0) return;
 			Height = val;
@@ -89,8 +101,8 @@ namespace wpf_git
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			Width = 450;
-			Height = 458;
+			Width = 580;
+			Height = 547;
 			_isWindowInitialized = true;
 		}
 	}

@@ -9,9 +9,9 @@ using System.Windows;
 
 namespace wpf_git
 {
-	public class CalculatorViewModel : INotifyPropertyChanged
+	public class VideoViewModel : INotifyPropertyChanged
 	{
-		public CalculatorViewModel()
+		public VideoViewModel()
 		{
 			DvrCtrlVisibility = Visibility.Visible;
 			QuickLaunchCtrlVisibility = Visibility.Visible;
@@ -33,16 +33,16 @@ namespace wpf_git
 		private System.Timers.Timer _dvrTimer;
 		private readonly object _dvrTimerlock = new object();
 		private string _dvrLaunchPinImage = _dvrPinImagePinned;
-		private const string _dvrPinImagePinned = @"~\..\Images\pin_pink_pinned.png";
-		private const string _dvrPinImageUnpinned = @"~\..\Images\pin_pink_unpinned.png";
+		private const string _dvrPinImagePinned = @"~\..\Images\expander_open.png";
+		private const string _dvrPinImageUnpinned = @"~\..\Images\expander_closed.png"; 
 
 		private bool _isQuickLaunchCtrlPinned = true;
 		private System.Timers.Timer _quickLaunchTimer;
 		private readonly object _quickLaunchTimerlock = new object();
 		private string _quickLaunchPinImage = _quickLaunchPinImagePinned;
-		private const string _quickLaunchPinImagePinned = @"~\..\Images\pin_pink_pinned.png";
-		private const string _quickLaunchPinImageUnpinned = @"~\..\Images\pin_pink_unpinned.png";
-
+		private const string _quickLaunchPinImagePinned = @"~\..\Images\expander_open.png";
+		private const string _quickLaunchPinImageUnpinned = @"~\..\Images\expander_closed.png";
+		
 		private double _ctrlVisibilityTimer = 2000;
 
 		private Visibility _dvrCtrlVisibility = Visibility.Visible;
@@ -96,8 +96,31 @@ namespace wpf_git
 		{
 			// Return true
 			return true;
+		}		
+
+		private ICommand _toggleDvrAndQuickLaunchCommand;
+
+		public ICommand ToggleDvrAndQuickLaunchCommand
+		{
+			get
+			{
+				if (_toggleDvrAndQuickLaunchCommand == null)
+				{
+					_toggleDvrAndQuickLaunchCommand = new RelayCommand(
+							param => ToggleDvrAndQuickLaunchCtrls(),
+							param => CanToggleDvrAndQuickLaunch()
+					);
+				}
+				return _toggleDvrAndQuickLaunchCommand;
+			}
 		}
-		
+
+		private bool CanToggleDvrAndQuickLaunch()
+		{
+			// Return true
+			return true;
+		}
+
 		private ICommand _tryOpenDvrAndQuickLaunchCommand;
 
 		public ICommand TryOpenDvrAndQuickLaunchCommand
@@ -242,10 +265,43 @@ namespace wpf_git
 
 		#region Methods
 
+		// DVR and Quick Launch
+		public void GeneralCtrlsMouseEnter()
+		{
+			QuickLaunchCtrlMouseEnter();
+			DvrCtrlMouseEnter();
+		}
+
+		public void GeneralCtrlsMouseLeave()
+		{
+			QuickLaunchCtrlMouseLeave();
+			DvrCtrlMouseLeave();
+		}
+
+		private void ToggleDvrAndQuickLaunchCtrls()
+		{
+			// The logic in this function needs to be improved.  ToggleDvrAndQuickLaunchCommand need more logic. 
+			// One of these ctrls can be open, closed, pinned, and unpinned!
+			if (IsQuickLaunchCtrlPinned && IsDvrCtrlPinned)
+			{
+				TryCloseDvrAndQuickLaunchCtrls();
+			}
+			else if((IsQuickLaunchCtrlPinned || IsDvrCtrlPinned) || (!IsQuickLaunchCtrlPinned || !IsDvrCtrlPinned))
+			{
+				TryOpenDvrAndQuickLaunchCtrls();
+			}
+		}
+
 		private void TryOpenDvrAndQuickLaunchCtrls()
 		{
 			TryOpenQuickLaunchCtrl();
 			TryOpenDvrCtrl();
+		}
+
+		private void TryCloseDvrAndQuickLaunchCtrls()
+		{
+			TryCloseQuickLaunchCtrl();
+			TryCloseDvrCtrl();
 		}
 
 		// DVR
@@ -306,6 +362,7 @@ namespace wpf_git
 		{
 			if (DvrCtrlVisibility == Visibility.Visible)
 			{
+				IsDvrCtrlPinned = false;
 				DvrCtrlVisibility = Visibility.Collapsed;
 			}
 		}
@@ -317,7 +374,7 @@ namespace wpf_git
 				DvrCtrlVisibility = Visibility.Visible;
 
 				_isDvrCtrlPinned = false;
-				DvrPinImage = _quickLaunchPinImageUnpinned;
+				DvrPinImage = _dvrPinImageUnpinned;
 				DvrTimerStop();
 				_dvrTimer.Interval = _ctrlVisibilityTimer;
 				_dvrTimer.Start();
@@ -377,10 +434,11 @@ namespace wpf_git
 			}
 		}
 
-		public void TryCloseQuickLaunchCtr()
+		public void TryCloseQuickLaunchCtrl()
 		{
 			if (QuickLaunchCtrlVisibility == Visibility.Visible)
 			{
+				IsQuickLaunchCtrlPinned = false;
 				QuickLaunchCtrlVisibility = Visibility.Collapsed;
 			}
 		}
