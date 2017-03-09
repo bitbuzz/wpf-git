@@ -14,7 +14,7 @@ namespace wpf_git
 		// Master was here.
 		public CalculatorViewModel()
 		{
-			// More comments from local master.
+			// More comments from user1234
 			DvrCtrlVisibility = Visibility.Visible;
 			QuickLaunchCtrlVisibility = Visibility.Visible;
 			IsDvrCtrlPinned = true;
