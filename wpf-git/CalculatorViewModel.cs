@@ -11,10 +11,8 @@ namespace wpf_git
 {
 	public class CalculatorViewModel : INotifyPropertyChanged
 	{
-		// Master was here.
 		public CalculatorViewModel()
 		{
-			// More comments from user1234
 			DvrCtrlVisibility = Visibility.Visible;
 			QuickLaunchCtrlVisibility = Visibility.Visible;
 			IsDvrCtrlPinned = true;
