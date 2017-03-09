@@ -19,6 +19,7 @@ namespace wpf_git
 			IsDvrCtrlPinned = true;
 			IsQuickLaunchCtrlPinned = true;
 
+			// TryRebase 2
 			_dvrTimer = new System.Timers.Timer(_ctrlVisibilityTimer);
 			_dvrTimer.AutoReset = false;
 			_dvrTimer.Elapsed += _dvrTimer_Elapsed;
