@@ -20,6 +20,7 @@ namespace wpf_git
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		// Try something new.
 		private double _dvrToolbarHeight = 33;
 		private double _quickLaunchToolbarHeight = 29;
 		private bool _isWindowInitialized = false;
