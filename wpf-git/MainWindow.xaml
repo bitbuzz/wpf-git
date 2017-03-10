@@ -30,7 +30,7 @@
 			<Border Grid.Row="0" Grid.Column="0" BorderBrush="Red" BorderThickness="2" Margin="0">
 				<Grid>
 					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" />
-					<Canvas Height="25" Width="25" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.25"/>
+					<Canvas Height="25" Width="25" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Red" Opacity="0.25"/>
 				</Grid>
 			</Border>
 
