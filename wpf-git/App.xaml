@@ -4,6 +4,14 @@
              xmlns:local="clr-namespace:wpf_git"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<!--Each dictionary can be added by its full path:-->
+				<!--<ResourceDictionary Source="pack://application:,,,/wpf-git.wpf-git;component/Styles.xaml"/>-->
+				
+				<!--If in the same project by its relative path:-->
+				<ResourceDictionary Source="Styles.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 </Application>

@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:wpf_git">
+	<!--Styling a datagrid-->
+	<!--https://msdn.microsoft.com/en-us/library/ff506248(v=vs.110).aspx-->
+	<!--https://blogs.msdn.microsoft.com/jaimer/2009/01/20/styling-microsofts-wpf-datagrid/-->
+	<Style x:Key="DataGridStyle" TargetType="DataGrid" BasedOn="{StaticResource {x:Type DataGrid}}">
+		<Setter Property="AlternatingRowBackground" Value="#eff5ff"/>
+	</Style>
+</ResourceDictionary>
