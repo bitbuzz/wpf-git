@@ -148,7 +148,7 @@
     <Resource Include="Images\GenericButtonPurple16.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\open_expanders.png" />
+    <Resource Include="Images\master_expander.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

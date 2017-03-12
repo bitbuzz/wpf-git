@@ -318,15 +318,13 @@ namespace wpf_git
 
 		private void ToggleDvrAndQuickLaunchCtrls()
 		{
-			// The logic in this function needs to be improved.  ToggleDvrAndQuickLaunchCommand need more logic. 
-			// One of these ctrls can be open, closed, pinned, and unpinned!
-			if (IsQuickLaunchCtrlPinned && IsDvrCtrlPinned)
-			{
-				TryCloseDvrAndQuickLaunchCtrls();
-			}
-			else if((IsQuickLaunchCtrlPinned || IsDvrCtrlPinned) || (!IsQuickLaunchCtrlPinned || !IsDvrCtrlPinned))
+			if (DvrCtrlVisibility == Visibility.Collapsed || QuickLaunchCtrlVisibility == Visibility.Collapsed)
 			{
 				TryOpenDvrAndQuickLaunchCtrls();
+			}
+			else if(DvrCtrlVisibility == Visibility.Visible || QuickLaunchCtrlVisibility == Visibility.Visible)
+			{
+				TryCloseDvrAndQuickLaunchCtrls();
 			}
 		}
 
