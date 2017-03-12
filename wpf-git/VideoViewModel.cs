@@ -25,6 +25,8 @@ namespace wpf_git
 			_quickLaunchTimer = new System.Timers.Timer(_ctrlVisibilityTimer);
 			_quickLaunchTimer.AutoReset = false;
 			_quickLaunchTimer.Elapsed += _quickLaunchTimer_Elapsed;
+
+			TryOpenMetadataViewer();
 		}
 
 		#region Local
@@ -48,9 +50,35 @@ namespace wpf_git
 		private Visibility _dvrCtrlVisibility = Visibility.Visible;
 		private Visibility _quickLaunchCtrlVisibility = Visibility.Visible;
 
+		private MetadataViewer _metadataViewerWindow = null;
+		private MetadataViewerViewModel _metadataViewerViewModel = null;
+
 		#endregion
 
 		#region Commands
+
+		private ICommand _tryOpenMetadataViewerCommand;
+
+		public ICommand TryOpenMetadataViewerCommand
+		{
+			get
+			{
+				if (_tryOpenMetadataViewerCommand == null)
+				{
+					_tryOpenMetadataViewerCommand = new RelayCommand(
+							param => TryOpenMetadataViewer(),
+							param => CanTryOpenMetadataViewer()
+					);
+				}
+				return _tryOpenMetadataViewerCommand;
+			}
+		}
+
+		private bool CanTryOpenMetadataViewer()
+		{
+			// Return true
+			return true;
+		}
 
 		private ICommand _toggleDvrCommand;
 
@@ -254,6 +282,16 @@ namespace wpf_git
 			}
 		}
 
+		public MetadataViewerViewModel MetadataViewerViewModel
+		{
+			get { return _metadataViewerViewModel; }
+			set
+			{
+				_metadataViewerViewModel = value;
+				OnPropertyChanged("MetadataViewerViewModel");
+			}
+		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		protected void OnPropertyChanged(string name)
@@ -454,6 +492,22 @@ namespace wpf_git
 				_quickLaunchTimer.Interval = _ctrlVisibilityTimer;
 				_quickLaunchTimer.Start();
 			}
+		}
+
+		// Metadata Viewer
+		private void TryOpenMetadataViewer()
+		{
+			if(_metadataViewerWindow == null)
+			{
+				_metadataViewerWindow = new MetadataViewer();
+				_metadataViewerViewModel = new MetadataViewerViewModel();
+				_metadataViewerWindow.DataContext = _metadataViewerViewModel;
+			}
+			_metadataViewerWindow.Height = 550;
+			_metadataViewerWindow.Width = 350;
+			_metadataViewerWindow.Show();
+			_metadataViewerWindow.Activate();
+			_metadataViewerWindow.Topmost = true;
 		}
 
 		#endregion
