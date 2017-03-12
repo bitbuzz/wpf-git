@@ -55,8 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MetadataViewer.xaml.cs">
-      <DependentUpon>MetadataViewer.xaml</DependentUpon>
+    <Compile Include="MetadataViewerWindow.xaml.cs">
+      <DependentUpon>MetadataViewerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MetadataViewerControl.xaml.cs">
       <DependentUpon>MetadataViewerControl.xaml</DependentUpon>
@@ -75,12 +75,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="VideoMetadata.cs" />
-    <Compile Include="VideoViewModel.cs" />
+    <Compile Include="VideoPlayerViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MetadataViewer.xaml">
+    <Page Include="MetadataViewerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

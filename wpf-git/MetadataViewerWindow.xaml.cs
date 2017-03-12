@@ -15,13 +15,19 @@ using System.Windows.Shapes;
 namespace wpf_git
 {
 	/// <summary>
-	/// Interaction logic for MetadataViewer.xaml
+	/// Interaction logic for MetadataViewerWindow.xaml
 	/// </summary>
-	public partial class MetadataViewer : Window
+	public partial class MetadataViewerWindow : Window
 	{
-		public MetadataViewer()
+		public MetadataViewerWindow()
 		{
 			InitializeComponent();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			e.Cancel = true;
+			Visibility = Visibility.Hidden;
 		}
 	}
 }

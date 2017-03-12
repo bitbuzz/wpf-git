@@ -6,27 +6,29 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows;
+using System.Runtime.InteropServices;
+using System.Diagnostics.Tracing;
 
 namespace wpf_git
 {
-	public class VideoViewModel : INotifyPropertyChanged
+	public class VideoPlayerViewModel : INotifyPropertyChanged, IDisposable
 	{
-		public VideoViewModel()
+		public VideoPlayerViewModel()
 		{
 			DvrCtrlVisibility = Visibility.Visible;
 			QuickLaunchCtrlVisibility = Visibility.Visible;
 			IsDvrCtrlPinned = true;
 			IsQuickLaunchCtrlPinned = true;
 
-			_dvrTimer = new System.Timers.Timer(_ctrlVisibilityTimer);
+			_dvrTimer = new System.Timers.Timer(_ctrlVisibilityInterval);
 			_dvrTimer.AutoReset = false;
 			_dvrTimer.Elapsed += _dvrTimer_Elapsed;
 
-			_quickLaunchTimer = new System.Timers.Timer(_ctrlVisibilityTimer);
+			_quickLaunchTimer = new System.Timers.Timer(_ctrlVisibilityInterval);
 			_quickLaunchTimer.AutoReset = false;
 			_quickLaunchTimer.Elapsed += _quickLaunchTimer_Elapsed;
 
-			TryOpenMetadataViewer();
+			_metadataViewerViewModel = new MetadataViewerViewModel();
 		}
 
 		#region Local
@@ -44,13 +46,13 @@ namespace wpf_git
 		private string _quickLaunchPinImage = _quickLaunchPinImagePinned;
 		private const string _quickLaunchPinImagePinned = @"~\..\Images\expander_open.png";
 		private const string _quickLaunchPinImageUnpinned = @"~\..\Images\expander_closed.png";
-		
-		private double _ctrlVisibilityTimer = 2000;
+
+		private double _mouseActionInterval = 250;
+		private double _ctrlVisibilityInterval = 250;
 
 		private Visibility _dvrCtrlVisibility = Visibility.Visible;
 		private Visibility _quickLaunchCtrlVisibility = Visibility.Visible;
 
-		private MetadataViewer _metadataViewerWindow = null;
 		private MetadataViewerViewModel _metadataViewerViewModel = null;
 
 		#endregion
@@ -66,7 +68,7 @@ namespace wpf_git
 				if (_tryOpenMetadataViewerCommand == null)
 				{
 					_tryOpenMetadataViewerCommand = new RelayCommand(
-							param => TryOpenMetadataViewer(),
+							param => _metadataViewerViewModel.TryOpenMetadataViewer(),
 							param => CanTryOpenMetadataViewer()
 					);
 				}
@@ -75,8 +77,7 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenMetadataViewer()
-		{
-			// Return true
+		{			
 			return true;
 		}
 
@@ -98,8 +99,7 @@ namespace wpf_git
 		}
 
 		private bool CanToggleDvr()
-		{
-			// Return true
+		{			
 			return true;
 		}
 
@@ -121,8 +121,7 @@ namespace wpf_git
 		}
 
 		private bool CanToggleQuickLaunch()
-		{
-			// Return true
+		{			
 			return true;
 		}		
 
@@ -144,8 +143,7 @@ namespace wpf_git
 		}
 
 		private bool CanToggleDvrAndQuickLaunch()
-		{
-			// Return true
+		{			
 			return true;
 		}
 
@@ -167,8 +165,7 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenDvrAndQuickLaunch()
-		{
-			// Return true
+		{			
 			return true;
 		}
 
@@ -190,8 +187,7 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenDvr()
-		{
-			// Return true
+		{			
 			return true;
 		}
 
@@ -213,8 +209,7 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenQuickLaunch()
-		{
-			// Return true
+		{			
 			return true;
 		}
 
@@ -366,14 +361,14 @@ namespace wpf_git
 			if (IsDvrCtrlPinned == false)
 			{
 				DvrTimerStop();
-				_dvrTimer.Interval = 750;
+				_dvrTimer.Interval = _mouseActionInterval;
 				_dvrTimer.Start();
 			}
 
 			if (IsQuickLaunchCtrlPinned == false)
 			{
 				QuickLaunchTimerStop();
-				_quickLaunchTimer.Interval = 750;
+				_quickLaunchTimer.Interval = _mouseActionInterval;
 				_quickLaunchTimer.Start();
 			}
 		}
@@ -412,7 +407,7 @@ namespace wpf_git
 				_isDvrCtrlPinned = false;
 				DvrPinImage = _dvrPinImageUnpinned;
 				DvrTimerStop();
-				_dvrTimer.Interval = _ctrlVisibilityTimer;
+				_dvrTimer.Interval = _ctrlVisibilityInterval;
 				_dvrTimer.Start();
 			}
 		}
@@ -443,13 +438,13 @@ namespace wpf_git
 			if (_isQuickLaunchCtrlPinned == false)
 			{
 				QuickLaunchTimerStop();
-				_quickLaunchTimer.Interval = 750;
+				_quickLaunchTimer.Interval = _mouseActionInterval;
 				_quickLaunchTimer.Start();
 			}
 			if (_isDvrCtrlPinned == false)
 			{
 				DvrTimerStop();
-				_dvrTimer.Interval = 750;
+				_dvrTimer.Interval = _mouseActionInterval;
 				_dvrTimer.Start();
 			}
 		}
@@ -487,25 +482,9 @@ namespace wpf_git
 				_isQuickLaunchCtrlPinned = false;
 				QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
 				_quickLaunchTimer.Stop();
-				_quickLaunchTimer.Interval = _ctrlVisibilityTimer;
+				_quickLaunchTimer.Interval = _ctrlVisibilityInterval;
 				_quickLaunchTimer.Start();
 			}
-		}
-
-		// Metadata Viewer
-		private void TryOpenMetadataViewer()
-		{
-			if(_metadataViewerWindow == null)
-			{
-				_metadataViewerWindow = new MetadataViewer();
-				_metadataViewerViewModel = new MetadataViewerViewModel();
-				_metadataViewerWindow.DataContext = _metadataViewerViewModel;
-			}
-			_metadataViewerWindow.Height = 550;
-			_metadataViewerWindow.Width = 350;
-			_metadataViewerWindow.Show();
-			_metadataViewerWindow.Activate();
-			_metadataViewerWindow.Topmost = true;
 		}
 
 		#endregion
@@ -554,6 +533,59 @@ namespace wpf_git
 					return;
 				}
 			}
+		}
+
+		#endregion
+
+		#region IDisposable
+
+		// TODO: Employ Weak Event Patterns in .NET 4.5
+		// http://msdn.microsoft.com/en-us/library/aa970850(v=vs.110).aspx
+
+		// Flag: Has Dispose already been called? 
+		bool disposed = false;
+
+		// Public implementation of Dispose pattern callable by consumers. 
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		// Protected implementation of Dispose pattern. 
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposed)
+				return;
+
+			if (disposing)
+			{
+				// Free any other managed objects here.
+				_dvrTimer.Stop();
+				_dvrTimer.Elapsed -= _dvrTimer_Elapsed;
+				_dvrTimer = null;
+
+				_quickLaunchTimer.Stop();
+				_quickLaunchTimer.Elapsed -= _quickLaunchTimer_Elapsed;
+				_quickLaunchTimer = null;
+
+				TryDispose(_metadataViewerViewModel);
+			}
+
+			// Free any unmanaged objects here. 
+			disposed = true;
+		}
+
+		~VideoPlayerViewModel()
+		{
+			this.Dispose(false);
+		}
+
+		private static void TryDispose(object obj)
+		{
+			var disposableObj = obj as IDisposable;
+			if (disposableObj != null)
+				disposableObj.Dispose();
 		}
 
 		#endregion
