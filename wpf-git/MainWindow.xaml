@@ -33,6 +33,7 @@
 				<Grid>
 					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" />
 					<!--<Canvas Height="25" Width="25" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.25"/>-->
+					<Image x:Name="PlayIconImage" Source="pack://application:,,,/wpf-git;component/Images\play_icon.png" Height="50" Width="50" Opacity="0" Visibility="Visible"></Image>
 				</Grid>
 			</Border>
 
@@ -115,7 +116,19 @@
 					<Button Grid.Row="1" Grid.Column="3" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" |&lt; "></Button>
 					<Button Grid.Row="1" Grid.Column="4" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;&lt; "></Button>
 					<Button Grid.Row="1" Grid.Column="5" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &lt;-"></Button>
-					<Button Grid.Row="1" Grid.Column="6" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt; "></Button>
+					<Button Grid.Row="1" Grid.Column="6" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt; ">
+						<Button.Triggers>
+							<EventTrigger RoutedEvent="Button.Click">
+								<EventTrigger.Actions>
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimation From="0" To="1" Duration="0:0:0:1" AutoReverse="True" Storyboard.TargetName="PlayIconImage" Storyboard.TargetProperty="(UIElement.Opacity)" />
+										</Storyboard>
+									</BeginStoryboard>
+								</EventTrigger.Actions>
+							</EventTrigger>
+						</Button.Triggers>
+					</Button>
 					<Button Grid.Row="1" Grid.Column="7" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" -&gt; "></Button>
 					<Button Grid.Row="1" Grid.Column="8" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;&gt; "></Button>
 					<Button Grid.Row="1" Grid.Column="9" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;| "></Button>

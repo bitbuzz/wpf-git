@@ -8,6 +8,10 @@ using System.Windows.Input;
 using System.Windows;
 using System.Runtime.InteropServices;
 using System.Diagnostics.Tracing;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Media.Animation;
 
 namespace wpf_git
 {
@@ -15,6 +19,10 @@ namespace wpf_git
 	{
 		public VideoPlayerViewModel()
 		{
+			_quickLaunchPinImage = QuickLaunchPinImagePinnedPath;
+			_dvrLaunchPinImage = DvrPinImagePinnedPath;
+			_playIconImage = PlayIconImagePath;
+
 			DvrCtrlVisibility = Visibility.Visible;
 			QuickLaunchCtrlVisibility = Visibility.Visible;
 			IsDvrCtrlPinned = true;
@@ -36,16 +44,19 @@ namespace wpf_git
 		private bool _isDvrCtrlPinned = true;
 		private System.Timers.Timer _dvrTimer;
 		private readonly object _dvrTimerlock = new object();
-		private string _dvrLaunchPinImage = _dvrPinImagePinned;
-		private const string _dvrPinImagePinned = @"~\..\Images\expander_open.png";
-		private const string _dvrPinImageUnpinned = @"~\..\Images\expander_closed.png"; 
+		private string _dvrLaunchPinImage = null;
+		private const string DvrPinImagePinnedPath = @"~\..\Images\expander_open.png";
+		private const string DvrPinImageUnpinnedPath = @"~\..\Images\expander_closed.png";
 
 		private bool _isQuickLaunchCtrlPinned = true;
 		private System.Timers.Timer _quickLaunchTimer;
 		private readonly object _quickLaunchTimerlock = new object();
-		private string _quickLaunchPinImage = _quickLaunchPinImagePinned;
-		private const string _quickLaunchPinImagePinned = @"~\..\Images\expander_open.png";
-		private const string _quickLaunchPinImageUnpinned = @"~\..\Images\expander_closed.png";
+		private string _quickLaunchPinImage = null;
+		private const string QuickLaunchPinImagePinnedPath = @"~\..\Images\expander_open.png";
+		private const string QuickLaunchPinImageUnpinnedPath = @"~\..\Images\expander_closed.png";
+
+		private string _playIconImage = null;
+		private const string PlayIconImagePath = @"~\..\Images\play_icon.png";
 
 		private double _mouseActionInterval = 250;
 		private double _ctrlVisibilityInterval = 250;
@@ -104,7 +115,7 @@ namespace wpf_git
 		{
 			return true;
 		}
-		
+
 		// General Ctrls Mouse Enter
 		private ICommand _generalCtrlsMouseEnterCommand;
 
@@ -150,7 +161,7 @@ namespace wpf_git
 		{
 			return true;
 		}
-		
+
 		// Quick Launch Mouse Enter
 		private ICommand _quickLaunchCtrlMouseEnterCommand;
 
@@ -216,7 +227,7 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenMetadataViewer()
-		{			
+		{
 			return true;
 		}
 
@@ -239,7 +250,7 @@ namespace wpf_git
 		}
 
 		private bool CanToggleDvr()
-		{			
+		{
 			return true;
 		}
 
@@ -262,9 +273,9 @@ namespace wpf_git
 		}
 
 		private bool CanToggleQuickLaunch()
-		{			
+		{
 			return true;
-		}		
+		}
 
 		// Toggle Dvr and Quick Launch
 		private ICommand _toggleDvrAndQuickLaunchCommand;
@@ -285,7 +296,7 @@ namespace wpf_git
 		}
 
 		private bool CanToggleDvrAndQuickLaunch()
-		{			
+		{
 			return true;
 		}
 
@@ -354,7 +365,7 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenDvrAndQuickLaunch()
-		{			
+		{
 			return true;
 		}
 
@@ -422,6 +433,16 @@ namespace wpf_git
 			}
 		}
 
+		public string PlayIconImage
+		{
+			get { return PlayIconImage; }
+			set
+			{
+				_playIconImage = value;
+				OnPropertyChanged("PlayIconImage");
+			}
+		}
+
 		public MetadataViewerViewModel MetadataViewerViewModel
 		{
 			get { return _metadataViewerViewModel; }
@@ -462,7 +483,7 @@ namespace wpf_git
 			{
 				TryOpenDvrAndQuickLaunchCtrls();
 			}
-			else if(DvrCtrlVisibility == Visibility.Visible || QuickLaunchCtrlVisibility == Visibility.Visible)
+			else if (DvrCtrlVisibility == Visibility.Visible || QuickLaunchCtrlVisibility == Visibility.Visible)
 			{
 				TryCloseDvrAndQuickLaunchCtrls();
 			}
@@ -524,13 +545,13 @@ namespace wpf_git
 			{
 				DvrCtrlVisibility = Visibility.Visible;
 				_isDvrCtrlPinned = true;
-				DvrPinImage = _dvrPinImagePinned;
+				DvrPinImage = DvrPinImagePinnedPath;
 			}
 			else
 			{
 				DvrCtrlVisibility = Visibility.Collapsed;
 				_isDvrCtrlPinned = false;
-				DvrPinImage = _dvrPinImagePinned;
+				DvrPinImage = DvrPinImagePinnedPath;
 			}
 		}
 
@@ -550,7 +571,7 @@ namespace wpf_git
 				DvrCtrlVisibility = Visibility.Visible;
 
 				_isDvrCtrlPinned = false;
-				DvrPinImage = _dvrPinImageUnpinned;
+				DvrPinImage = DvrPinImageUnpinnedPath;
 				DvrTimerStop();
 				_dvrTimer.Interval = _ctrlVisibilityInterval;
 				_dvrTimer.Start();
@@ -600,13 +621,13 @@ namespace wpf_git
 			{
 				QuickLaunchCtrlVisibility = Visibility.Visible;
 				_isQuickLaunchCtrlPinned = true;
-				QuickLaunchPinImage = _quickLaunchPinImagePinned;
+				QuickLaunchPinImage = QuickLaunchPinImagePinnedPath;
 			}
 			else
 			{
 				QuickLaunchCtrlVisibility = Visibility.Collapsed;
 				_isQuickLaunchCtrlPinned = false;
-				QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
+				QuickLaunchPinImage = QuickLaunchPinImageUnpinnedPath;
 			}
 		}
 
@@ -625,7 +646,7 @@ namespace wpf_git
 			{
 				QuickLaunchCtrlVisibility = Visibility.Visible;
 				_isQuickLaunchCtrlPinned = false;
-				QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
+				QuickLaunchPinImage = QuickLaunchPinImageUnpinnedPath;
 				_quickLaunchTimer.Stop();
 				_quickLaunchTimer.Interval = _ctrlVisibilityInterval;
 				_quickLaunchTimer.Start();
@@ -643,12 +664,12 @@ namespace wpf_git
 				if (_isDvrCtrlPinned == false)
 				{
 					DvrCtrlVisibility = Visibility.Collapsed;
-					DvrPinImage = _dvrPinImageUnpinned;
+					DvrPinImage = DvrPinImageUnpinnedPath;
 				}
 				else
 				{
 					DvrCtrlVisibility = Visibility.Visible;
-					DvrPinImage = _dvrPinImagePinned;
+					DvrPinImage = DvrPinImagePinnedPath;
 				}
 
 				if (_dvrTimer.Enabled == false)
@@ -665,12 +686,12 @@ namespace wpf_git
 				if (_isQuickLaunchCtrlPinned == false)
 				{
 					QuickLaunchCtrlVisibility = Visibility.Collapsed;
-					QuickLaunchPinImage = _quickLaunchPinImageUnpinned;
+					QuickLaunchPinImage = QuickLaunchPinImageUnpinnedPath;
 				}
 				else
 				{
 					QuickLaunchCtrlVisibility = Visibility.Visible;
-					QuickLaunchPinImage = _quickLaunchPinImagePinned;
+					QuickLaunchPinImage = QuickLaunchPinImagePinnedPath;
 				}
 
 				if (_quickLaunchTimer.Enabled == false)
