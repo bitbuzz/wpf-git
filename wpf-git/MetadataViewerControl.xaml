@@ -26,9 +26,8 @@
 			<Border BorderBrush="{x:Null}" Grid.Column="0" Grid.Row="0" Height="25" Margin="0,0,4,4" VerticalAlignment="Center">
 				<TextBlock VerticalAlignment="Center" TextAlignment="Center">Search:</TextBlock>
 			</Border>
-			<TextBox x:Name="SearchTextBox" Grid.Column="1" Grid.Row="0" Height="25" Margin="0,0,0,4" VerticalContentAlignment="Center" KeyDown="SearchTextBox_KeyDown" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+			<TextBox x:Name="SearchTextBox" Grid.Column="1" Grid.Row="0" Height="25" Margin="0,0,0,4" VerticalContentAlignment="Center" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"></TextBox>
 		</Grid>
-
-		<DataGrid Grid.Column="0" Grid.Row="1" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Style="{StaticResource DataGridStyle}" CanUserAddRows="False" ItemsSource="{Binding VideoMetadataCollection}"/>
+		<DataGrid x:Name="VideoMetadataDataGrid" Grid.Column="0" Grid.Row="1" Margin="0" AutoGeneratingColumn="VideoMetadataDataGrid_AutoGeneratingColumn" AutoGenerateColumns="True" Style="{StaticResource DataGridStyle}" CanUserAddRows="False" ItemsSource="{Binding VideoMetadataCollection}"/>
 	</Grid>
 </UserControl>

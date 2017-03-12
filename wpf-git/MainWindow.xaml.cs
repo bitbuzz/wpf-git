@@ -28,43 +28,43 @@ namespace wpf_git
 		{
 			InitializeComponent();
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
-			DataContext = new VideoViewModel();
+			DataContext = new VideoPlayerViewModel();
 		}
 
-		private void Video_MouseEnter(object sender, MouseEventArgs e)
-		{
-			((VideoViewModel)DataContext).TryOpenQuickLaunchCtrl();
-			((VideoViewModel)DataContext).TryOpenDvrCtrl();
-		}
+		//private void Video_MouseEnter(object sender, MouseEventArgs e)
+		//{
+		//	((VideoPlayerViewModel)DataContext).TryOpenQuickLaunchCtrl();
+		//	((VideoPlayerViewModel)DataContext).TryOpenDvrCtrl();
+		//}
 
 		private void QuickLaunch_MouseEnter(object sender, MouseEventArgs e)
 		{
-			((VideoViewModel)DataContext).QuickLaunchCtrlMouseEnter();
+			((VideoPlayerViewModel)DataContext).QuickLaunchCtrlMouseEnter();
 		}
 
 		private void QuickLaunch_MouseLeave(object sender, MouseEventArgs e)
 		{
-			((VideoViewModel)DataContext).QuickLaunchCtrlMouseLeave();
+			((VideoPlayerViewModel)DataContext).QuickLaunchCtrlMouseLeave();
 		}
 
 		private void Dvr_MouseEnter(object sender, MouseEventArgs e)
 		{
-			((VideoViewModel)DataContext).DvrCtrlMouseEnter();
+			((VideoPlayerViewModel)DataContext).DvrCtrlMouseEnter();
 		}
 
 		private void Dvr_MouseLeave(object sender, MouseEventArgs e)
 		{
-			((VideoViewModel)DataContext).DvrCtrlMouseLeave();
+			((VideoPlayerViewModel)DataContext).DvrCtrlMouseLeave();
 		}
 
 		private void GeneralCtrlsGrid_MouseEnter(object sender, MouseEventArgs e)
 		{
-			((VideoViewModel)DataContext).GeneralCtrlsMouseEnter();
+			((VideoPlayerViewModel)DataContext).GeneralCtrlsMouseEnter();
 		}
 
 		private void GeneralCtrlsGrid_MouseLeave(object sender, MouseEventArgs e)
 		{
-			((VideoViewModel)DataContext).GeneralCtrlsMouseLeave();
+			((VideoPlayerViewModel)DataContext).GeneralCtrlsMouseLeave();
 		}
 
 		private void dvrVisibility_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -104,6 +104,12 @@ namespace wpf_git
 			Width = 580;
 			Height = 547;
 			_isWindowInitialized = true;
+			((VideoPlayerViewModel)DataContext).MetadataViewerViewModel.TryOpenMetadataViewer();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			((VideoPlayerViewModel)DataContext).Dispose();
 		}
 	}
 }

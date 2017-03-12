@@ -25,12 +25,10 @@ namespace wpf_git
 			InitializeComponent();
 		}
 
-		private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)
+		// This prevents an extra empty column from being created within the DataGrid.
+		private void VideoMetadataDataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
 		{
-			if (((MetadataViewerViewModel)DataContext).SearchVideoMetadataCollectionCommand.CanExecute(null))
-			{
-				((MetadataViewerViewModel)DataContext).SearchVideoMetadataCollectionCommand.Execute(null);
-			}
+			e.Column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 		}
 	}
 }
