@@ -24,5 +24,13 @@ namespace wpf_git
 		{
 			InitializeComponent();
 		}
+
+		private void SearchTextBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (((MetadataViewerViewModel)DataContext).SearchVideoMetadataCollectionCommand.CanExecute(null))
+			{
+				((MetadataViewerViewModel)DataContext).SearchVideoMetadataCollectionCommand.Execute(null);
+			}
+		}
 	}
 }
