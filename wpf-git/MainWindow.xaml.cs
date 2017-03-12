@@ -30,6 +30,9 @@ namespace wpf_git
 			InitializeComponent();
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			DataContext = new VideoPlayerViewModel();
+
+			ExpanderTester et = new ExpanderTester();
+			et.Show();
 		}
 
 		private void DvrCtrlBorder_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
