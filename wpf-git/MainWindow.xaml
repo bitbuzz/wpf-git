@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:wpf_git"
 				mc:Ignorable="d"
 				UseLayoutRounding="True"
-        d:DesignHeight="451" 
-        d:DesignWidth="455"
+        d:DesignHeight="485" 
+        d:DesignWidth="500"
 				Loaded="Window_Loaded"
 				Closing="Window_Closing"
         Title="MainWindow">
@@ -35,8 +36,16 @@
 				</Grid>
 			</Border>
 
-			<Border x:Name="QuickLaunchCtrlBorder" Grid.Row="1" Grid.Column="0" BorderBrush="Black" Background="#eff2f7" BorderThickness="0" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsVisibleChanged="quickLaunchVisibility_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-				<Grid Background="Transparent" MouseEnter="QuickLaunch_MouseEnter" MouseLeave="QuickLaunch_MouseLeave">
+			<Border x:Name="QuickLaunchCtrlBorder" Grid.Row="1" Grid.Column="0" BorderBrush="Black" Background="#eff2f7" BorderThickness="0" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" IsVisibleChanged="QuickLaunchCtrlBorder_IsVisibleChanged" Visibility="{Binding Path=QuickLaunchCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+				<Grid Background="Transparent">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseEnter">
+							<i:InvokeCommandAction Command="{Binding QuickLaunchCtrlMouseEnterCommand}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseLeave">
+							<i:InvokeCommandAction Command="{Binding QuickLaunchCtrlMouseLeaveCommand}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
@@ -63,14 +72,25 @@
 					<Button Grid.Row="0" Grid.Column="5" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
 						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonRed16.png" Height="16" Width="16" />
 					</Button>
-					<Button x:Name="DvrCtrlPinButton" Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Open the Video tools (Ctrl+Shift+F)" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+					<Button Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Open the Video tools (Ctrl+Shift+F)" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
 						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
 					</Button>
 				</Grid>
 			</Border>
-						
-			<Border x:Name="DvrCtrlBorder" Grid.Row="2" Grid.Column="0" BorderBrush="Transparent" BorderThickness="0" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsVisibleChanged="dvrVisibility_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
-				<Grid x:Name="visibility" Background="Transparent" MouseEnter="Dvr_MouseEnter" MouseLeave="Dvr_MouseLeave">
+
+			<Border x:Name="DvrCtrlBorder" Grid.Row="2" Grid.Column="0" BorderBrush="Transparent" BorderThickness="0" Margin="0,0,0,0" HorizontalAlignment="Stretch" IsVisibleChanged="DvrCtrlBorder_IsVisibleChanged" Visibility="{Binding Path=DvrCtrlVisibility, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+				<Grid Background="Transparent">
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="IsVisibleChanged">
+							<i:InvokeCommandAction Command="{Binding IsVisibleChangedCommand}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseEnter">
+							<i:InvokeCommandAction Command="{Binding DvrCtrlMouseEnterCommand}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseLeave">
+							<i:InvokeCommandAction Command="{Binding DvrCtrlMouseLeaveCommand}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
 					</Grid.RowDefinitions>
@@ -99,11 +119,19 @@
 					<Button Grid.Row="1" Grid.Column="7" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" -&gt; "></Button>
 					<Button Grid.Row="1" Grid.Column="8" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;&gt; "></Button>
 					<Button Grid.Row="1" Grid.Column="9" Height="25" Width="35" Margin="2,4,2,4" Background="Transparent" Content=" &gt;| "></Button>
-					<TextBlock Grid.Row="1" Grid.Column="11" Margin="0,0,4,0" HorizontalAlignment="Right" VerticalAlignment="Center">Play Speed: 1</TextBlock>
+					<TextBlock Grid.Row="1" Grid.Column="11" Margin="0,0,12,0" HorizontalAlignment="Right" VerticalAlignment="Center">Play Speed: 1</TextBlock>
 				</Grid>
 			</Border>
 
-			<Grid x:Name="GeneralCtrlsGrid" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch" MouseEnter="GeneralCtrlsGrid_MouseEnter" MouseLeave="GeneralCtrlsGrid_MouseLeave">
+			<Grid Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="MouseEnter">
+						<i:InvokeCommandAction Command="{Binding GeneralCtrlsMouseEnterCommand}"/>
+					</i:EventTrigger>
+					<i:EventTrigger EventName="MouseLeave">
+						<i:InvokeCommandAction Command="{Binding GeneralCtrlsMouseLeaveCommand}"/>
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto"/>
 				</Grid.RowDefinitions>

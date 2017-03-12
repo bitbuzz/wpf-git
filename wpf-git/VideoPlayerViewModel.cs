@@ -59,6 +59,145 @@ namespace wpf_git
 
 		#region Commands
 
+		// Dvr Mouse Enter
+		private ICommand _dvrCtrlMouseEnterCommand;
+
+		public ICommand DvrCtrlMouseEnterCommand
+		{
+			get
+			{
+				if (_dvrCtrlMouseEnterCommand == null)
+				{
+					_dvrCtrlMouseEnterCommand = new RelayCommand(
+							param => DvrCtrlMouseEnter(),
+							param => CanDvrCtrlMouseEnter()
+					);
+				}
+				return _dvrCtrlMouseEnterCommand;
+			}
+		}
+
+		private bool CanDvrCtrlMouseEnter()
+		{
+			return true;
+		}
+
+		// Quick Launch Mouse Leave
+		private ICommand _dvrCtrlMouseLeaveCommand;
+
+		public ICommand DvrCtrlMouseLeaveCommand
+		{
+			get
+			{
+				if (_dvrCtrlMouseLeaveCommand == null)
+				{
+					_dvrCtrlMouseLeaveCommand = new RelayCommand(
+							param => DvrCtrlMouseLeave(),
+							param => CanDvrCtrlMouseLeave()
+					);
+				}
+				return _dvrCtrlMouseLeaveCommand;
+			}
+		}
+
+		private bool CanDvrCtrlMouseLeave()
+		{
+			return true;
+		}
+		
+		// General Ctrls Mouse Enter
+		private ICommand _generalCtrlsMouseEnterCommand;
+
+		public ICommand GeneralCtrlsMouseEnterCommand
+		{
+			get
+			{
+				if (_generalCtrlsMouseEnterCommand == null)
+				{
+					_generalCtrlsMouseEnterCommand = new RelayCommand(
+							param => GeneralCtrlsMouseEnter(),
+							param => CanGeneralCtrlsMouseEnter()
+					);
+				}
+				return _generalCtrlsMouseEnterCommand;
+			}
+		}
+
+		private bool CanGeneralCtrlsMouseEnter()
+		{
+			return true;
+		}
+
+		// General Ctrls Mouse Leave
+		private ICommand _generalCtrlsMouseLeaveCommand;
+
+		public ICommand GeneralCtrlsMouseLeaveCommand
+		{
+			get
+			{
+				if (_generalCtrlsMouseLeaveCommand == null)
+				{
+					_generalCtrlsMouseLeaveCommand = new RelayCommand(
+							param => GeneralCtrlsMouseLeave(),
+							param => CanGeneralCtrlsMouseLeave()
+					);
+				}
+				return _generalCtrlsMouseLeaveCommand;
+			}
+		}
+
+		private bool CanGeneralCtrlsMouseLeave()
+		{
+			return true;
+		}
+		
+		// Quick Launch Mouse Enter
+		private ICommand _quickLaunchCtrlMouseEnterCommand;
+
+		public ICommand QuickLaunchCtrlMouseEnterCommand
+		{
+			get
+			{
+				if (_quickLaunchCtrlMouseEnterCommand == null)
+				{
+					_quickLaunchCtrlMouseEnterCommand = new RelayCommand(
+							param => QuickLaunchCtrlMouseEnter(),
+							param => CanQuickLaunchCtrlMouseEnter()
+					);
+				}
+				return _quickLaunchCtrlMouseEnterCommand;
+			}
+		}
+
+		private bool CanQuickLaunchCtrlMouseEnter()
+		{
+			return true;
+		}
+
+		// Quick Launch Mouse Leave
+		private ICommand _quickLaunchCtrlMouseLeaveCommand;
+
+		public ICommand QuickLaunchCtrlMouseLeaveCommand
+		{
+			get
+			{
+				if (_quickLaunchCtrlMouseLeaveCommand == null)
+				{
+					_quickLaunchCtrlMouseLeaveCommand = new RelayCommand(
+							param => QuickLaunchCtrlMouseLeave(),
+							param => CanQuickLaunchCtrlMouseLeave()
+					);
+				}
+				return _quickLaunchCtrlMouseLeaveCommand;
+			}
+		}
+
+		private bool CanQuickLaunchCtrlMouseLeave()
+		{
+			return true;
+		}
+
+		// Try Open Metadata Viewer
 		private ICommand _tryOpenMetadataViewerCommand;
 
 		public ICommand TryOpenMetadataViewerCommand
@@ -81,6 +220,7 @@ namespace wpf_git
 			return true;
 		}
 
+		// Toggle Dvr 
 		private ICommand _toggleDvrCommand;
 
 		public ICommand ToggleDvrCommand
@@ -103,6 +243,7 @@ namespace wpf_git
 			return true;
 		}
 
+		// Toggle Quick Launch
 		private ICommand _toggleQuickLaunchCommand;
 
 		public ICommand ToggleQuickLaunchCommand
@@ -125,6 +266,7 @@ namespace wpf_git
 			return true;
 		}		
 
+		// Toggle Dvr and Quick Launch
 		private ICommand _toggleDvrAndQuickLaunchCommand;
 
 		public ICommand ToggleDvrAndQuickLaunchCommand
@@ -147,28 +289,7 @@ namespace wpf_git
 			return true;
 		}
 
-		private ICommand _tryOpenDvrAndQuickLaunchCommand;
-
-		public ICommand TryOpenDvrAndQuickLaunchCommand
-		{
-			get
-			{
-				if (_tryOpenDvrAndQuickLaunchCommand == null)
-				{
-					_tryOpenDvrAndQuickLaunchCommand = new RelayCommand(
-							param => TryOpenDvrAndQuickLaunchCtrls(),
-							param => CanTryOpenDvrAndQuickLaunch()
-					);
-				}
-				return _tryOpenDvrAndQuickLaunchCommand;
-			}
-		}
-
-		private bool CanTryOpenDvrAndQuickLaunch()
-		{			
-			return true;
-		}
-
+		// Try Open Dvr
 		private ICommand _tryOpenDvrCommand;
 
 		public ICommand TryOpenDvrCommand
@@ -187,10 +308,11 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenDvr()
-		{			
+		{
 			return true;
 		}
 
+		// Try Open Quick Launch
 		private ICommand _tryOpenQuickLaunchCommand;
 
 		public ICommand TryOpenQuickLaunchCommand
@@ -209,6 +331,29 @@ namespace wpf_git
 		}
 
 		private bool CanTryOpenQuickLaunch()
+		{
+			return true;
+		}
+
+		// Try Open Dvr and Quick Launch
+		private ICommand _tryOpenDvrAndQuickLaunchCommand;
+
+		public ICommand TryOpenDvrAndQuickLaunchCommand
+		{
+			get
+			{
+				if (_tryOpenDvrAndQuickLaunchCommand == null)
+				{
+					_tryOpenDvrAndQuickLaunchCommand = new RelayCommand(
+							param => TryOpenDvrAndQuickLaunchCtrls(),
+							param => CanTryOpenDvrAndQuickLaunch()
+					);
+				}
+				return _tryOpenDvrAndQuickLaunchCommand;
+			}
+		}
+
+		private bool CanTryOpenDvrAndQuickLaunch()
 		{			
 			return true;
 		}
@@ -413,7 +558,7 @@ namespace wpf_git
 		}
 
 		// Quick Launch Toolbar
-		void QuickLaunchTimerStop()
+		private void QuickLaunchTimerStop()
 		{
 			lock (_quickLaunchTimerlock)
 			{
@@ -421,7 +566,7 @@ namespace wpf_git
 			}
 		}
 
-		public void QuickLaunchCtrlMouseEnter()
+		private void QuickLaunchCtrlMouseEnter()
 		{
 			if (_quickLaunchTimer.Enabled == true)
 			{
@@ -433,7 +578,7 @@ namespace wpf_git
 			}
 		}
 
-		public void QuickLaunchCtrlMouseLeave()
+		private void QuickLaunchCtrlMouseLeave()
 		{
 			if (_isQuickLaunchCtrlPinned == false)
 			{

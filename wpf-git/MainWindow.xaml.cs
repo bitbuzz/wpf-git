@@ -31,45 +31,13 @@ namespace wpf_git
 			DataContext = new VideoPlayerViewModel();
 		}
 
-		//private void Video_MouseEnter(object sender, MouseEventArgs e)
-		//{
-		//	((VideoPlayerViewModel)DataContext).TryOpenQuickLaunchCtrl();
-		//	((VideoPlayerViewModel)DataContext).TryOpenDvrCtrl();
-		//}
-
-		private void QuickLaunch_MouseEnter(object sender, MouseEventArgs e)
+		private void DvrCtrlBorder_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
-			((VideoPlayerViewModel)DataContext).QuickLaunchCtrlMouseEnter();
-		}
+			if (!_isWindowInitialized)
+			{
+				return;
+			}
 
-		private void QuickLaunch_MouseLeave(object sender, MouseEventArgs e)
-		{
-			((VideoPlayerViewModel)DataContext).QuickLaunchCtrlMouseLeave();
-		}
-
-		private void Dvr_MouseEnter(object sender, MouseEventArgs e)
-		{
-			((VideoPlayerViewModel)DataContext).DvrCtrlMouseEnter();
-		}
-
-		private void Dvr_MouseLeave(object sender, MouseEventArgs e)
-		{
-			((VideoPlayerViewModel)DataContext).DvrCtrlMouseLeave();
-		}
-
-		private void GeneralCtrlsGrid_MouseEnter(object sender, MouseEventArgs e)
-		{
-			((VideoPlayerViewModel)DataContext).GeneralCtrlsMouseEnter();
-		}
-
-		private void GeneralCtrlsGrid_MouseLeave(object sender, MouseEventArgs e)
-		{
-			((VideoPlayerViewModel)DataContext).GeneralCtrlsMouseLeave();
-		}
-
-		private void dvrVisibility_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-			if (!_isWindowInitialized) return;
 			double val;			
 			if(((Border)sender).Visibility == Visibility.Collapsed)
 			{
@@ -79,13 +47,24 @@ namespace wpf_git
 			{
 				val = ActualHeight + _dvrToolbarHeight;
 			}
-			if (val < 0) return;
-			Height = val;
+
+			if (val < 0)
+			{
+				return;
+			}
+			else
+			{
+				Height = val;
+			}
 		}
 
-		private void quickLaunchVisibility_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		private void QuickLaunchCtrlBorder_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
-			if (!_isWindowInitialized) return;
+			if (!_isWindowInitialized) 
+			{ 
+				return; 
+			}
+
 			double val;
 			if (((Border)sender).Visibility == Visibility.Collapsed)
 			{
@@ -95,8 +74,15 @@ namespace wpf_git
 			{
 				val = ActualHeight + _quickLaunchToolbarHeight;
 			}
-			if (val < 0) return;
-			Height = val;
+
+			if (val < 0)
+			{
+				return;
+			}
+			else
+			{
+				Height = val;
+			}			
 		}
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
