@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace wpf_git
 {
 	/// <summary>
-	/// Interaction logic for ExpanderTester.xaml
+	/// Interaction logic for Shapes3D.xaml
 	/// </summary>
-	public partial class ExpanderTester : Window
+	public partial class Shapes3DWindow : Window
 	{
-		public ExpanderTester()
+		public Shapes3DWindow()
 		{
 			InitializeComponent();
 		}
