@@ -13,9 +13,9 @@
 				Closing="Window_Closing"
         Title="MainWindow">
 	<Window.InputBindings>
-		<KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding TryOpenDvrCommand}"/>
+		<!--<KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding TryOpenDvrCommand}"/>
 		<KeyBinding Gesture="Ctrl+Shift+F" Command="{Binding TryOpenQuickLaunchCommand}"/>
-		<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding TryOpenDvrAndQuickLaunchCommand}"/>
+		<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding TryOpenDvrAndQuickLaunchCommand}"/>-->
 	</Window.InputBindings>
 	<Canvas x:Name="LayoutRoot">
 		<Grid Canvas.Left="0" Canvas.Top="0" Margin="0" Width="{Binding ActualWidth, ElementName=LayoutRoot}" Height="{Binding ActualHeight, ElementName=LayoutRoot}">
@@ -73,7 +73,7 @@
 					<Button Grid.Row="0" Grid.Column="5" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
 						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonRed16.png" Height="16" Width="16" />
 					</Button>
-					<Button Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Open the Video tools (Ctrl+Shift+F)" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+					<Button Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Open the Video tools" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
 						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
 					</Button>
 				</Grid>
@@ -109,7 +109,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open the DVR controls (Ctrl+Shift+D)" Margin="1,0,0,0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
+					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open the DVR controls" Margin="1,0,0,0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
 						<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
 					</Button>
 					<TextBlock Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">02:24 / 10:00</TextBlock>
@@ -157,7 +157,7 @@
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
 
-				<Button Grid.Column="0" Grid.Row="0" ToolTip="Open and close the DVR controls and video tools (Ctrl+Shift+S)" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrAndQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="19" Width="19">
+				<Button Grid.Column="0" Grid.Row="0" ToolTip="Open and close the DVR controls and video tools" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrAndQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="19" Width="19">
 					<Image Source="pack://application:,,,/wpf-git;component/Images\master_expander.png" Height="16" Width="16" />
 				</Button>
 				<TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0">Sep. 19, 2012 14:15:50</TextBlock>

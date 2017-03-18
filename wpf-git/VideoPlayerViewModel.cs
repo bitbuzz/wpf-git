@@ -45,15 +45,15 @@ namespace wpf_git
 		private System.Timers.Timer _dvrTimer;
 		private readonly object _dvrTimerlock = new object();
 		private string _dvrLaunchPinImage = null;
-		private const string DvrPinImagePinnedPath = @"~\..\Images\expander_open.png";
-		private const string DvrPinImageUnpinnedPath = @"~\..\Images\expander_closed.png";
+		private const string DvrPinImagePinnedPath = @"~\..\Images\PinIn16.png";
+		private const string DvrPinImageUnpinnedPath = @"~\..\Images\PinOut16.png";
 
 		private bool _isQuickLaunchCtrlPinned = true;
 		private System.Timers.Timer _quickLaunchTimer;
 		private readonly object _quickLaunchTimerlock = new object();
 		private string _quickLaunchPinImage = null;
-		private const string QuickLaunchPinImagePinnedPath = @"~\..\Images\expander_open.png";
-		private const string QuickLaunchPinImageUnpinnedPath = @"~\..\Images\expander_closed.png";
+		private const string QuickLaunchPinImagePinnedPath = @"~\..\Images\PinIn16.png";
+		private const string QuickLaunchPinImageUnpinnedPath = @"~\..\Images\PinOut16.png";
 
 		private string _playIconImage = null;
 		private const string PlayIconImagePath = @"~\..\Images\play_icon.png";
