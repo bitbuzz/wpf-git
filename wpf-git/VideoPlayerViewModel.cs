@@ -621,8 +621,8 @@ namespace wpf_git
 
 		private void GeneralCtrlsMouseLeave()
 		{
-			isDvrRecentlyUnpinned = false;
-			isQuickLaunchRecentlyUnpinned = false;
+			//isDvrRecentlyUnpinned = false;
+			//isQuickLaunchRecentlyUnpinned = false;
 		}
 
 		// Video
