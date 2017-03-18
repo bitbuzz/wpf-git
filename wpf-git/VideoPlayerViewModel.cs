@@ -39,334 +39,295 @@ namespace wpf_git
 			_metadataViewerViewModel = new MetadataViewerViewModel();
 		}
 
-		#region Local
+		#region Private
 
 		private bool _isDvrCtrlPinned = true;
 		private System.Timers.Timer _dvrTimer;
 		private readonly object _dvrTimerlock = new object();
 		private string _dvrLaunchPinImage = null;
-		private const string DvrPinImagePinnedPath = @"~\..\Images\expander_open.png";
-		private const string DvrPinImageUnpinnedPath = @"~\..\Images\expander_closed.png";
+		private const string DvrPinImagePinnedPath = @"~\..\Images\PinIn16.png";
+		private const string DvrPinImageUnpinnedPath = @"~\..\Images\PinOut16.png";
 
 		private bool _isQuickLaunchCtrlPinned = true;
 		private System.Timers.Timer _quickLaunchTimer;
 		private readonly object _quickLaunchTimerlock = new object();
 		private string _quickLaunchPinImage = null;
-		private const string QuickLaunchPinImagePinnedPath = @"~\..\Images\expander_open.png";
-		private const string QuickLaunchPinImageUnpinnedPath = @"~\..\Images\expander_closed.png";
-
+		private const string QuickLaunchPinImagePinnedPath = @"~\..\Images\PinIn16.png";
+		private const string QuickLaunchPinImageUnpinnedPath = @"~\..\Images\PinOut16.png";
 		private string _playIconImage = null;
 		private const string PlayIconImagePath = @"~\..\Images\play_icon.png";
 
+		private bool isDvrRecentlyUnpinned = false;
+		private bool isQuickLaunchRecentlyUnpinned = false;
 		private double _mouseActionInterval = 250;
 		private double _ctrlVisibilityInterval = 250;
-
 		private Visibility _dvrCtrlVisibility = Visibility.Visible;
 		private Visibility _quickLaunchCtrlVisibility = Visibility.Visible;
-
+		private ICommand _dvrCtrlMouseEnterCmd;
+		private ICommand _dvrCtrlMouseLeaveCmd;
+		private ICommand _generalCtrlsMouseEnterCmd;
+		private ICommand _generalCtrlsMouseLeaveCmd;
+		private ICommand _quickLaunchCtrlMouseEnterCmd;
+		private ICommand _quickLaunchCtrlMouseLeaveCmd;
+		private ICommand _tryOpenMetadataViewerCmd;
+		private ICommand _toggleDvrCmd;
+		private ICommand _toggleQuickLaunchCmd;
+		private ICommand _toggleDvrAndQuickLaunchCmd;
+		private ICommand _tryOpenDvrCmd;
+		private ICommand _tryOpenQuickLaunchCmd;
+		private ICommand _tryCloseDvrAndQuickLaunchCtrlsCmd;
+		private ICommand _tryOpenDvrAndQuickLaunchCmd;
+		private ICommand _videoCtrlMouseEnterCmd;
+		private ICommand _videoCtrlMouseLeaveCmd;
 		private MetadataViewerViewModel _metadataViewerViewModel = null;
 
 		#endregion
 
 		#region Commands
 
-		// Dvr Mouse Enter
-		private ICommand _dvrCtrlMouseEnterCommand;
-
-		public ICommand DvrCtrlMouseEnterCommand
+		// DVR
+		public ICommand DvrCtrlMouseEnterCmd
 		{
 			get
 			{
-				if (_dvrCtrlMouseEnterCommand == null)
+				if (_dvrCtrlMouseEnterCmd == null)
 				{
-					_dvrCtrlMouseEnterCommand = new RelayCommand(
+					_dvrCtrlMouseEnterCmd = new RelayCommand(
 							param => DvrCtrlMouseEnter(),
-							param => CanDvrCtrlMouseEnter()
+							(param) => true
 					);
 				}
-				return _dvrCtrlMouseEnterCommand;
+				return _dvrCtrlMouseEnterCmd;
 			}
 		}
 
-		private bool CanDvrCtrlMouseEnter()
-		{
-			return true;
-		}
-
-		// Quick Launch Mouse Leave
-		private ICommand _dvrCtrlMouseLeaveCommand;
-
-		public ICommand DvrCtrlMouseLeaveCommand
+		public ICommand DvrCtrlMouseLeaveCmd
 		{
 			get
 			{
-				if (_dvrCtrlMouseLeaveCommand == null)
+				if (_dvrCtrlMouseLeaveCmd == null)
 				{
-					_dvrCtrlMouseLeaveCommand = new RelayCommand(
+					_dvrCtrlMouseLeaveCmd = new RelayCommand(
 							param => DvrCtrlMouseLeave(),
-							param => CanDvrCtrlMouseLeave()
+							(param) => true
 					);
 				}
-				return _dvrCtrlMouseLeaveCommand;
+				return _dvrCtrlMouseLeaveCmd;
 			}
 		}
 
-		private bool CanDvrCtrlMouseLeave()
-		{
-			return true;
-		}
-
-		// General Ctrls Mouse Enter
-		private ICommand _generalCtrlsMouseEnterCommand;
-
-		public ICommand GeneralCtrlsMouseEnterCommand
+		public ICommand ToggleDvrCmd
 		{
 			get
 			{
-				if (_generalCtrlsMouseEnterCommand == null)
+				if (_toggleDvrCmd == null)
 				{
-					_generalCtrlsMouseEnterCommand = new RelayCommand(
-							param => GeneralCtrlsMouseEnter(),
-							param => CanGeneralCtrlsMouseEnter()
-					);
-				}
-				return _generalCtrlsMouseEnterCommand;
-			}
-		}
-
-		private bool CanGeneralCtrlsMouseEnter()
-		{
-			return true;
-		}
-
-		// General Ctrls Mouse Leave
-		private ICommand _generalCtrlsMouseLeaveCommand;
-
-		public ICommand GeneralCtrlsMouseLeaveCommand
-		{
-			get
-			{
-				if (_generalCtrlsMouseLeaveCommand == null)
-				{
-					_generalCtrlsMouseLeaveCommand = new RelayCommand(
-							param => GeneralCtrlsMouseLeave(),
-							param => CanGeneralCtrlsMouseLeave()
-					);
-				}
-				return _generalCtrlsMouseLeaveCommand;
-			}
-		}
-
-		private bool CanGeneralCtrlsMouseLeave()
-		{
-			return true;
-		}
-
-		// Quick Launch Mouse Enter
-		private ICommand _quickLaunchCtrlMouseEnterCommand;
-
-		public ICommand QuickLaunchCtrlMouseEnterCommand
-		{
-			get
-			{
-				if (_quickLaunchCtrlMouseEnterCommand == null)
-				{
-					_quickLaunchCtrlMouseEnterCommand = new RelayCommand(
-							param => QuickLaunchCtrlMouseEnter(),
-							param => CanQuickLaunchCtrlMouseEnter()
-					);
-				}
-				return _quickLaunchCtrlMouseEnterCommand;
-			}
-		}
-
-		private bool CanQuickLaunchCtrlMouseEnter()
-		{
-			return true;
-		}
-
-		// Quick Launch Mouse Leave
-		private ICommand _quickLaunchCtrlMouseLeaveCommand;
-
-		public ICommand QuickLaunchCtrlMouseLeaveCommand
-		{
-			get
-			{
-				if (_quickLaunchCtrlMouseLeaveCommand == null)
-				{
-					_quickLaunchCtrlMouseLeaveCommand = new RelayCommand(
-							param => QuickLaunchCtrlMouseLeave(),
-							param => CanQuickLaunchCtrlMouseLeave()
-					);
-				}
-				return _quickLaunchCtrlMouseLeaveCommand;
-			}
-		}
-
-		private bool CanQuickLaunchCtrlMouseLeave()
-		{
-			return true;
-		}
-
-		// Try Open Metadata Viewer
-		private ICommand _tryOpenMetadataViewerCommand;
-
-		public ICommand TryOpenMetadataViewerCommand
-		{
-			get
-			{
-				if (_tryOpenMetadataViewerCommand == null)
-				{
-					_tryOpenMetadataViewerCommand = new RelayCommand(
-							param => _metadataViewerViewModel.TryOpenMetadataViewer(),
-							param => CanTryOpenMetadataViewer()
-					);
-				}
-				return _tryOpenMetadataViewerCommand;
-			}
-		}
-
-		private bool CanTryOpenMetadataViewer()
-		{
-			return true;
-		}
-
-		// Toggle Dvr 
-		private ICommand _toggleDvrCommand;
-
-		public ICommand ToggleDvrCommand
-		{
-			get
-			{
-				if (_toggleDvrCommand == null)
-				{
-					_toggleDvrCommand = new RelayCommand(
+					_toggleDvrCmd = new RelayCommand(
 							param => ToggleDvrCtrl(),
-							param => CanToggleDvr()
+							(param) => true
 					);
 				}
-				return _toggleDvrCommand;
+				return _toggleDvrCmd;
 			}
 		}
 
-		private bool CanToggleDvr()
-		{
-			return true;
-		}
-
-		// Toggle Quick Launch
-		private ICommand _toggleQuickLaunchCommand;
-
-		public ICommand ToggleQuickLaunchCommand
+		public ICommand OpenDvrCmd
 		{
 			get
 			{
-				if (_toggleQuickLaunchCommand == null)
+				if (_tryOpenDvrCmd == null)
 				{
-					_toggleQuickLaunchCommand = new RelayCommand(
-							param => ToggleQuickLaunchCtrl(),
-							param => CanToggleQuickLaunch()
-					);
-				}
-				return _toggleQuickLaunchCommand;
-			}
-		}
-
-		private bool CanToggleQuickLaunch()
-		{
-			return true;
-		}
-
-		// Toggle Dvr and Quick Launch
-		private ICommand _toggleDvrAndQuickLaunchCommand;
-
-		public ICommand ToggleDvrAndQuickLaunchCommand
-		{
-			get
-			{
-				if (_toggleDvrAndQuickLaunchCommand == null)
-				{
-					_toggleDvrAndQuickLaunchCommand = new RelayCommand(
-							param => ToggleDvrAndQuickLaunchCtrls(),
-							param => CanToggleDvrAndQuickLaunch()
-					);
-				}
-				return _toggleDvrAndQuickLaunchCommand;
-			}
-		}
-
-		private bool CanToggleDvrAndQuickLaunch()
-		{
-			return true;
-		}
-
-		// Try Open Dvr
-		private ICommand _tryOpenDvrCommand;
-
-		public ICommand TryOpenDvrCommand
-		{
-			get
-			{
-				if (_tryOpenDvrCommand == null)
-				{
-					_tryOpenDvrCommand = new RelayCommand(
+					_tryOpenDvrCmd = new RelayCommand(
 							param => TryOpenDvrCtrl(),
-							param => CanTryOpenDvr()
+							(param) => true
 					);
 				}
-				return _tryOpenDvrCommand;
+				return _tryOpenDvrCmd;
 			}
 		}
 
-		private bool CanTryOpenDvr()
-		{
-			return true;
-		}
-
-		// Try Open Quick Launch
-		private ICommand _tryOpenQuickLaunchCommand;
-
-		public ICommand TryOpenQuickLaunchCommand
+		// Quick Launch
+		public ICommand QuickLaunchCtrlMouseEnterCmd
 		{
 			get
 			{
-				if (_tryOpenQuickLaunchCommand == null)
+				if (_quickLaunchCtrlMouseEnterCmd == null)
 				{
-					_tryOpenQuickLaunchCommand = new RelayCommand(
+					_quickLaunchCtrlMouseEnterCmd = new RelayCommand(
+							param => QuickLaunchCtrlMouseEnter(),
+							(param) => true
+					);
+				}
+				return _quickLaunchCtrlMouseEnterCmd;
+			}
+		}
+
+		public ICommand QuickLaunchCtrlMouseLeaveCmd
+		{
+			get
+			{
+				if (_quickLaunchCtrlMouseLeaveCmd == null)
+				{
+					_quickLaunchCtrlMouseLeaveCmd = new RelayCommand(
+							param => QuickLaunchCtrlMouseLeave(),
+							(param) => true
+					);
+				}
+				return _quickLaunchCtrlMouseLeaveCmd;
+			}
+		}
+
+		public ICommand ToggleQuickLaunchCmd
+		{
+			get
+			{
+				if (_toggleQuickLaunchCmd == null)
+				{
+					_toggleQuickLaunchCmd = new RelayCommand(
+							param => ToggleQuickLaunchCtrl(),
+							(param) => true
+					);
+				}
+				return _toggleQuickLaunchCmd;
+			}
+		}
+
+		public ICommand OpenQuickLaunchCmd
+		{
+			get
+			{
+				if (_tryOpenQuickLaunchCmd == null)
+				{
+					_tryOpenQuickLaunchCmd = new RelayCommand(
 							param => TryOpenQuickLaunchCtrl(),
-							param => CanTryOpenQuickLaunch()
+							(param) => true
 					);
 				}
-				return _tryOpenQuickLaunchCommand;
+				return _tryOpenQuickLaunchCmd;
 			}
 		}
-
-		private bool CanTryOpenQuickLaunch()
-		{
-			return true;
-		}
-
-		// Try Open Dvr and Quick Launch
-		private ICommand _tryOpenDvrAndQuickLaunchCommand;
-
-		public ICommand TryOpenDvrAndQuickLaunchCommand
+		
+		// Dvr and Quick Launch
+		public ICommand ToggleDvrAndQuickLaunchCmd
 		{
 			get
 			{
-				if (_tryOpenDvrAndQuickLaunchCommand == null)
+				if (_toggleDvrAndQuickLaunchCmd == null)
 				{
-					_tryOpenDvrAndQuickLaunchCommand = new RelayCommand(
-							param => TryOpenDvrAndQuickLaunchCtrls(),
-							param => CanTryOpenDvrAndQuickLaunch()
+					_toggleDvrAndQuickLaunchCmd = new RelayCommand(
+							param => ToggleDvrAndQuickLaunchCtrls(),
+							(param) => true
 					);
 				}
-				return _tryOpenDvrAndQuickLaunchCommand;
+				return _toggleDvrAndQuickLaunchCmd;
 			}
 		}
 
-		private bool CanTryOpenDvrAndQuickLaunch()
+		public ICommand TryCloseDvrAndQuickLaunchCtrlsCmd
 		{
-			return true;
+			get
+			{
+				if (_tryCloseDvrAndQuickLaunchCtrlsCmd == null)
+				{
+					_tryCloseDvrAndQuickLaunchCtrlsCmd = new RelayCommand(
+							param => TryCloseDvrAndQuickLaunchCtrls(),
+							(param) => true
+					);
+				}
+				return _tryCloseDvrAndQuickLaunchCtrlsCmd;
+			}
+		}
+
+		public ICommand TryOpenDvrAndQuickLaunchCmd
+		{
+			get
+			{
+				if (_tryOpenDvrAndQuickLaunchCmd == null)
+				{
+					_tryOpenDvrAndQuickLaunchCmd = new RelayCommand(
+							param => TryOpenDvrAndQuickLaunchCtrls(),
+							(param) => true
+					);
+				}
+				return _tryOpenDvrAndQuickLaunchCmd;
+			}
+		}
+
+		public ICommand TryOpenMetadataViewerCmd
+		{
+			get
+			{
+				if (_tryOpenMetadataViewerCmd == null)
+				{
+					_tryOpenMetadataViewerCmd = new RelayCommand(
+							param => _metadataViewerViewModel.TryOpenMetadataViewer(),
+							(param) => true
+					);
+				}
+				return _tryOpenMetadataViewerCmd;
+			}
+		}
+
+		// General Ctrls
+		public ICommand GeneralCtrlsMouseEnterCmd
+		{
+			get
+			{
+				if (_generalCtrlsMouseEnterCmd == null)
+				{
+					_generalCtrlsMouseEnterCmd = new RelayCommand(
+							param => GeneralCtrlsMouseEnter(),
+							(param) => true
+					);
+				}
+				return _generalCtrlsMouseEnterCmd;
+			}
+		}
+
+		public ICommand GeneralCtrlsMouseLeaveCmd
+		{
+			get
+			{
+				if (_generalCtrlsMouseLeaveCmd == null)
+				{
+					_generalCtrlsMouseLeaveCmd = new RelayCommand(
+							param => GeneralCtrlsMouseLeave(),
+							(param) => true
+					);
+				}
+				return _generalCtrlsMouseLeaveCmd;
+			}
+		}
+
+		// Video
+		public ICommand VideoCtrlMouseEnterCmd
+		{
+			get
+			{
+				if (_videoCtrlMouseEnterCmd == null)
+				{
+					_videoCtrlMouseEnterCmd = new RelayCommand(
+							param => VideoCtrlMouseEnter(),
+							(param) => true
+					);
+				}
+				return _videoCtrlMouseEnterCmd;
+			}
+		}
+		
+		public ICommand VideoCtrlMouseLeaveCmd
+		{
+			get
+			{
+				if (_videoCtrlMouseLeaveCmd == null)
+				{
+					_videoCtrlMouseLeaveCmd = new RelayCommand(
+							param => VideoCtrlMouseLeave(),
+							(param) => true
+					);
+				}
+				return _videoCtrlMouseLeaveCmd;
+			}
 		}
 
 		#endregion
@@ -465,17 +426,6 @@ namespace wpf_git
 		#region Methods
 
 		// DVR and Quick Launch
-		public void GeneralCtrlsMouseEnter()
-		{
-			QuickLaunchCtrlMouseEnter();
-			DvrCtrlMouseEnter();
-		}
-
-		public void GeneralCtrlsMouseLeave()
-		{
-			QuickLaunchCtrlMouseLeave();
-			DvrCtrlMouseLeave();
-		}
 
 		private void ToggleDvrAndQuickLaunchCtrls()
 		{
@@ -552,20 +502,25 @@ namespace wpf_git
 				DvrCtrlVisibility = Visibility.Collapsed;
 				_isDvrCtrlPinned = false;
 				DvrPinImage = DvrPinImagePinnedPath;
+				isDvrRecentlyUnpinned = true;
 			}
 		}
 
 		public void TryCloseDvrCtrl()
 		{
-			if (DvrCtrlVisibility == Visibility.Visible)
+			if (DvrCtrlVisibility == Visibility.Visible && IsDvrCtrlPinned == false)
 			{
-				IsDvrCtrlPinned = false;
 				DvrCtrlVisibility = Visibility.Collapsed;
 			}
 		}
 
 		public void TryOpenDvrCtrl()
 		{
+			if (isDvrRecentlyUnpinned)
+			{
+				return;
+			}
+
 			if (DvrCtrlVisibility == Visibility.Collapsed)
 			{
 				DvrCtrlVisibility = Visibility.Visible;
@@ -628,20 +583,25 @@ namespace wpf_git
 				QuickLaunchCtrlVisibility = Visibility.Collapsed;
 				_isQuickLaunchCtrlPinned = false;
 				QuickLaunchPinImage = QuickLaunchPinImageUnpinnedPath;
+				isQuickLaunchRecentlyUnpinned = true;
 			}
 		}
 
 		public void TryCloseQuickLaunchCtrl()
 		{
-			if (QuickLaunchCtrlVisibility == Visibility.Visible)
+			if (QuickLaunchCtrlVisibility == Visibility.Visible && IsQuickLaunchCtrlPinned == false)
 			{
-				IsQuickLaunchCtrlPinned = false;
 				QuickLaunchCtrlVisibility = Visibility.Collapsed;
 			}
 		}
 
 		public void TryOpenQuickLaunchCtrl()
 		{
+			if (isQuickLaunchRecentlyUnpinned == true)
+			{
+				return;
+			}
+
 			if (QuickLaunchCtrlVisibility == Visibility.Collapsed)
 			{
 				QuickLaunchCtrlVisibility = Visibility.Visible;
@@ -651,6 +611,39 @@ namespace wpf_git
 				_quickLaunchTimer.Interval = _ctrlVisibilityInterval;
 				_quickLaunchTimer.Start();
 			}
+		}
+
+		// General Ctrls
+		private void GeneralCtrlsMouseEnter()
+		{
+			// TODO: Implement this?
+		}
+
+		private void GeneralCtrlsMouseLeave()
+		{
+			isDvrRecentlyUnpinned = false;
+			isQuickLaunchRecentlyUnpinned = false;
+		}
+
+		// Video
+		private void VideoCtrlMouseEnter()
+		{
+			//TryOpenDvrAndQuickLaunchCtrls();
+			ToggleDvrAndQuickLaunchCtrls();
+
+			DvrCtrlMouseEnter();
+			QuickLaunchCtrlMouseEnter();
+
+			isDvrRecentlyUnpinned = false;
+			isQuickLaunchRecentlyUnpinned = false;
+		}
+
+		private void VideoCtrlMouseLeave()
+		{
+			DvrCtrlMouseLeave();
+			QuickLaunchCtrlMouseLeave();
+			isDvrRecentlyUnpinned = false;
+			isQuickLaunchRecentlyUnpinned = false;
 		}
 
 		#endregion
