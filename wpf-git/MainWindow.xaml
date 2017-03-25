@@ -42,7 +42,13 @@
 							<i:InvokeCommandAction Command="{Binding TryCloseDvrAndQuickLaunchCtrlsCmd}"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
-					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" />
+					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="MouseWheel">
+								<i:InvokeCommandAction Command="{Binding AsyncAwaitCmd}"/>
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</local:VideoFrameControl>
 					<Image x:Name="PlayIconImage" Source="pack://application:,,,/wpf-git;component/Images\play_icon.png" Height="50" Width="50" Opacity="0" Visibility="Visible"></Image>
 				</Grid>
 			</Border>

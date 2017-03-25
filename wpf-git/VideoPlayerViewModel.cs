@@ -63,6 +63,7 @@ namespace wpf_git
 		private double _ctrlVisibilityInterval = 250;
 		private Visibility _dvrCtrlVisibility = Visibility.Visible;
 		private Visibility _quickLaunchCtrlVisibility = Visibility.Visible;
+		private ICommand _asyncAwaitCmd;
 		private ICommand _dvrCtrlMouseEnterCmd;
 		private ICommand _dvrCtrlMouseLeaveCmd;
 		private ICommand _generalCtrlsMouseEnterCmd;
@@ -84,6 +85,22 @@ namespace wpf_git
 		#endregion
 
 		#region Commands
+
+		// Async/Await
+		public ICommand AsyncAwaitCmd
+		{
+			get
+			{
+				if (_asyncAwaitCmd == null)
+				{
+					_asyncAwaitCmd = new RelayCommand(
+							async param => await AsyncAwait(),
+							(param) => true
+					);
+				}
+				return _asyncAwaitCmd;
+			}
+		}
 
 		// DVR
 		public ICommand DvrCtrlMouseEnterCmd
@@ -424,6 +441,19 @@ namespace wpf_git
 		#endregion
 
 		#region Methods
+
+		public int CalculateMandelbrot()
+		{
+			// Tons of work to do in here!
+			//for (int i = 0; i != 10000000; ++i) ;
+			return 42;
+		}
+
+		// Async Await
+		private async Task AsyncAwait()
+		{
+			await Task.Run(() => CalculateMandelbrot()); //Task.Delay(500);
+		}
 
 		// DVR and Quick Launch
 
