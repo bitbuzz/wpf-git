@@ -31,6 +31,15 @@ namespace wpf_git
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			DataContext = new VideoPlayerViewModel();
 
+			List<person> people = new List<person>();
+			people.Add(new person() { age = 5, name = "john" });
+			people.Add(new person() { age = 20, name = "bill" });
+
+			int i = people.RemoveAll(x => x.age != 5);
+
+			MessageBox.Show(i.ToString() + Environment.NewLine +
+			people.FirstOrDefault().name);
+
 			//Shapes3DWindow shapes3DWindow = new Shapes3DWindow();
 			//shapes3DWindow.Show();
 		}
@@ -101,5 +110,11 @@ namespace wpf_git
 		{
 			((VideoPlayerViewModel)DataContext).Dispose();
 		}
+	}
+
+	public class person
+	{
+		public string name;
+		public int age;
 	}
 }

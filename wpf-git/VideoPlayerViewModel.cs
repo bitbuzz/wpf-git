@@ -442,10 +442,25 @@ namespace wpf_git
 
 		#region Methods
 
+		private double _videoWindowHeight;
+		public double VideoWindowHeight
+		{
+			get 
+			{
+				return _videoWindowHeight;
+			}
+			set
+			{
+				_videoWindowHeight = value;
+				OnPropertyChanged("VideoWindowHeight");
+			}
+		}
+
 		public int CalculateMandelbrot()
 		{
 			// Tons of work to do in here!
 			//for (int i = 0; i != 10000000; ++i) ;
+			MessageBox.Show(_videoWindowHeight.ToString());
 			return 42;
 		}
 

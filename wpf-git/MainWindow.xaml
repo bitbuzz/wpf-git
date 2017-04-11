@@ -11,7 +11,8 @@
         d:DesignWidth="500"
 				Loaded="Window_Loaded"
 				Closing="Window_Closing"
-        Title="MainWindow">
+        Title="MainWindow"
+				Height="{Binding Path=VideoWindowHeight, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
 	<Window.InputBindings>
 		<KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding OpenDvrCmd}"/>
 		<KeyBinding Gesture="Ctrl+Shift+F" Command="{Binding OpenQuickLaunchCmd}"/>
