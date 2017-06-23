@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows;
-using System.Runtime.InteropServices;
-using System.Diagnostics.Tracing;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.IO;
-using System.Windows.Media.Animation;
 
 namespace wpf_git
 {
-	public class VideoPlayerViewModel : INotifyPropertyChanged, IDisposable
+  public class VideoPlayerViewModel : INotifyPropertyChanged, IDisposable
 	{
 		public VideoPlayerViewModel()
 		{
