@@ -86,10 +86,4 @@ namespace wpf_git
 			((VideoPlayerViewModel)DataContext).Dispose();
 		}
 	}
-
-	public class person
-	{
-		public string name;
-		public int age;
-	}
 }
