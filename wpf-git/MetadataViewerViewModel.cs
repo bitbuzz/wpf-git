@@ -2,18 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace wpf_git
 {
-	public class MetadataViewerViewModel : IDisposable
+  public class MetadataViewerViewModel : IDisposable
 	{
 		public MetadataViewerViewModel()
 		{

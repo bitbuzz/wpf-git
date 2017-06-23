@@ -85,11 +85,10 @@ namespace wpf_git
 		{
 			((VideoPlayerViewModel)DataContext).Dispose();
 		}
-	}
 
-	public class person
-	{
-		public string name;
-		public int age;
-	}
+    private void TestBtn_Click(object sender, RoutedEventArgs e)
+    {
+      MessageBox.Show(myVisual3D.Content.Bounds.X.ToString() + ", " + myVisual3D.Content.Bounds.Y.ToString() + ", " + myVisual3D.Content.Bounds.Z.ToString());
+    }
+  }
 }
