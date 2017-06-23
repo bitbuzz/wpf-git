@@ -56,8 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ExpanderTester.xaml.cs">
-      <DependentUpon>ExpanderTester.xaml</DependentUpon>
+    <Compile Include="Shapes3DWindow.xaml.cs">
+      <DependentUpon>Shapes3DWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MetadataViewerWindow.xaml.cs">
       <DependentUpon>MetadataViewerWindow.xaml</DependentUpon>
@@ -70,7 +70,7 @@
     <Compile Include="VideoFrameControl.xaml.cs">
       <DependentUpon>VideoFrameControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="ExpanderTester.xaml">
+    <Page Include="Shapes3DWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,11 +11,12 @@
         d:DesignWidth="500"
 				Loaded="Window_Loaded"
 				Closing="Window_Closing"
-        Title="MainWindow">
+        Title="MainWindow"
+				Height="{Binding Path=VideoWindowHeight, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
 	<Window.InputBindings>
-		<!--<KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding TryOpenDvrCommand}"/>
-		<KeyBinding Gesture="Ctrl+Shift+F" Command="{Binding TryOpenQuickLaunchCommand}"/>
-		<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding TryOpenDvrAndQuickLaunchCommand}"/>-->
+		<KeyBinding Gesture="Ctrl+Shift+D" Command="{Binding OpenDvrCmd}"/>
+		<KeyBinding Gesture="Ctrl+Shift+F" Command="{Binding OpenQuickLaunchCmd}"/>
+		<KeyBinding Gesture="Ctrl+Shift+S" Command="{Binding TryOpenDvrAndQuickLaunchCmd}"/>
 	</Window.InputBindings>
 	<Canvas x:Name="LayoutRoot">
 		<Grid Canvas.Left="0" Canvas.Top="0" Margin="0" Width="{Binding ActualWidth, ElementName=LayoutRoot}" Height="{Binding ActualHeight, ElementName=LayoutRoot}">
@@ -31,8 +32,24 @@
 
 			<Border Grid.Row="0" Grid.Column="0" BorderBrush="Red" BorderThickness="2" Margin="0">
 				<Grid>
-					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" />
-					<!--<Canvas Height="25" Width="25" MouseEnter="Video_MouseEnter" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Red" Opacity="0.25"/>-->
+					<i:Interaction.Triggers>
+						<i:EventTrigger EventName="MouseEnter">
+							<i:InvokeCommandAction Command="{Binding VideoCtrlMouseEnterCmd}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseLeave">
+							<i:InvokeCommandAction Command="{Binding VideoCtrlMouseLeaveCmd}"/>
+						</i:EventTrigger>
+						<i:EventTrigger EventName="MouseDown">
+							<i:InvokeCommandAction Command="{Binding TryCloseDvrAndQuickLaunchCtrlsCmd}"/>
+						</i:EventTrigger>
+					</i:Interaction.Triggers>
+					<local:VideoFrameControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+						<i:Interaction.Triggers>
+							<i:EventTrigger EventName="MouseWheel">
+								<i:InvokeCommandAction Command="{Binding AsyncAwaitCmd}"/>
+							</i:EventTrigger>
+						</i:Interaction.Triggers>
+					</local:VideoFrameControl>
 					<Image x:Name="PlayIconImage" Source="pack://application:,,,/wpf-git;component/Images\play_icon.png" Height="50" Width="50" Opacity="0" Visibility="Visible"></Image>
 				</Grid>
 			</Border>
@@ -41,10 +58,10 @@
 				<Grid Background="Transparent">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="MouseEnter">
-							<i:InvokeCommandAction Command="{Binding QuickLaunchCtrlMouseEnterCommand}"/>
+							<i:InvokeCommandAction Command="{Binding QuickLaunchCtrlMouseEnterCmd}"/>
 						</i:EventTrigger>
 						<i:EventTrigger EventName="MouseLeave">
-							<i:InvokeCommandAction Command="{Binding QuickLaunchCtrlMouseLeaveCommand}"/>
+							<i:InvokeCommandAction Command="{Binding QuickLaunchCtrlMouseLeaveCmd}"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 					<Grid.RowDefinitions>
@@ -58,7 +75,7 @@
 						<ColumnDefinition Width="Auto"/>
 						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.Column="1" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Command="{Binding TryOpenMetadataViewerCommand}">
+					<Button Grid.Row="0" Grid.Column="1" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Command="{Binding TryOpenMetadataViewerCmd}">
 						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonBlack16.png" Height="16" Width="16" />
 					</Button>
 					<Button Grid.Row="0" Grid.Column="2" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
@@ -73,7 +90,7 @@
 					<Button Grid.Row="0" Grid.Column="5" Height="25" Width="30" Margin="0,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent">
 						<Image Source="pack://application:,,,/wpf-git;component/Images\GenericButtonRed16.png" Height="16" Width="16" />
 					</Button>
-					<Button Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Open the Video tools" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
+					<Button Grid.Row="0" Grid.Column="0" Margin="1,0,0,0" ToolTip="Open the Video tools (Ctrl+Shift+F)" HorizontalAlignment="Left" VerticalAlignment="Center" Command="{Binding Path=ToggleQuickLaunchCmd}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17" >
 						<Image Source="{Binding QuickLaunchPinImage}" Height="14" Width="14" />
 					</Button>
 				</Grid>
@@ -83,13 +100,13 @@
 				<Grid Background="Transparent">
 					<i:Interaction.Triggers>
 						<i:EventTrigger EventName="IsVisibleChanged">
-							<i:InvokeCommandAction Command="{Binding IsVisibleChangedCommand}"/>
+							<i:InvokeCommandAction Command="{Binding IsVisibleChangedCmd}"/>
 						</i:EventTrigger>
 						<i:EventTrigger EventName="MouseEnter">
-							<i:InvokeCommandAction Command="{Binding DvrCtrlMouseEnterCommand}"/>
+							<i:InvokeCommandAction Command="{Binding DvrCtrlMouseEnterCmd}"/>
 						</i:EventTrigger>
 						<i:EventTrigger EventName="MouseLeave">
-							<i:InvokeCommandAction Command="{Binding DvrCtrlMouseLeaveCommand}"/>
+							<i:InvokeCommandAction Command="{Binding DvrCtrlMouseLeaveCmd}"/>
 						</i:EventTrigger>
 					</i:Interaction.Triggers>
 					<Grid.RowDefinitions>
@@ -109,7 +126,7 @@
 						<ColumnDefinition Width="*"/>
 						<ColumnDefinition Width="Auto"/>
 					</Grid.ColumnDefinitions>
-					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open the DVR controls" Margin="1,0,0,0" Command="{Binding Path=ToggleDvrCommand}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
+					<Button Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" ToolTip="Open the DVR controls (Ctrl+Shift+D)" Margin="1,0,0,0" Command="{Binding Path=ToggleDvrCmd}" Background="Transparent" BorderBrush="Transparent" Height="17" Width="17">
 						<Image Source="{Binding DvrPinImage}" Height="14" Width="14" />
 					</Button>
 					<TextBlock Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">02:24 / 10:00</TextBlock>
@@ -139,10 +156,10 @@
 			<Grid Grid.Row="3" Grid.Column="0" HorizontalAlignment="Stretch">
 				<i:Interaction.Triggers>
 					<i:EventTrigger EventName="MouseEnter">
-						<i:InvokeCommandAction Command="{Binding GeneralCtrlsMouseEnterCommand}"/>
+						<i:InvokeCommandAction Command="{Binding GeneralCtrlsMouseEnterCmd}"/>
 					</i:EventTrigger>
 					<i:EventTrigger EventName="MouseLeave">
-						<i:InvokeCommandAction Command="{Binding GeneralCtrlsMouseLeaveCommand}"/>
+						<i:InvokeCommandAction Command="{Binding GeneralCtrlsMouseLeaveCmd}"/>
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 				<Grid.RowDefinitions>
@@ -156,10 +173,9 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-
-				<Button Grid.Column="0" Grid.Row="0" ToolTip="Open and close the DVR controls and video tools" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrAndQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="19" Width="19">
-					<Image Source="pack://application:,,,/wpf-git;component/Images\master_expander.png" Height="16" Width="16" />
-				</Button>
+				<!--<Button Grid.Column="0" Grid.Row="0" ToolTip="Open and close the DVR controls and video tools (Ctrl+Shift+S)" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrAndQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="19" Width="19">
+					<Image Source="pack://application:,,,/wpf-git;component/Images\PinIn16.png" Height="16" Width="16" />
+				</Button>-->
 				<TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0">Sep. 19, 2012 14:15:50</TextBlock>
 				<Slider Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="125" Value="5" Margin="2"/>
 				<TextBlock Grid.Column="5" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0">-104.991367, 40.739472</TextBlock>

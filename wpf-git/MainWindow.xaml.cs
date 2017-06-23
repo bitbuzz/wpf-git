@@ -31,8 +31,8 @@ namespace wpf_git
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			DataContext = new VideoPlayerViewModel();
 
-			//ExpanderTester et = new ExpanderTester();
-			//et.Show();
+			Shapes3DWindow shapes3DWindow = new Shapes3DWindow();
+			shapes3DWindow.Show();
 		}
 
 		private void DvrCtrlBorder_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -101,5 +101,11 @@ namespace wpf_git
 		{
 			((VideoPlayerViewModel)DataContext).Dispose();
 		}
+	}
+
+	public class person
+	{
+		public string name;
+		public int age;
 	}
 }
