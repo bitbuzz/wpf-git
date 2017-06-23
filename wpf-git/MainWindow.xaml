@@ -50,7 +50,75 @@
 							</i:EventTrigger>
 						</i:Interaction.Triggers>
 					</local:VideoFrameControl>
-					<Image x:Name="PlayIconImage" Source="pack://application:,,,/wpf-git;component/Images\play_icon.png" Height="50" Width="50" Opacity="0" Visibility="Visible"></Image>
+          <!--https://stuff.seans.com/2008/08/13/drawing-a-cube-in-wpf/-->
+          <!--https://msdn.microsoft.com/en-us/library/ms747437(v=vs.110).aspx-->
+          <Viewport3D Name="viewport3D1" Opacity=".7">
+            <Viewport3D.Camera>
+              <PerspectiveCamera x:Name="camMain" Position="6.3 6.3 4" LookDirection="-6 -5 -4">
+              </PerspectiveCamera>
+            </Viewport3D.Camera>
+            <ModelVisual3D>
+              <ModelVisual3D.Content>
+                <DirectionalLight x:Name="dirLightMain" Direction="-1,-1,-1">
+                </DirectionalLight>
+              </ModelVisual3D.Content>
+            </ModelVisual3D>
+            <ModelVisual3D x:Name="MyModel">
+              <ModelVisual3D.Content>
+                <GeometryModel3D>
+                  <GeometryModel3D.Geometry>
+                    <MeshGeometry3D x:Name="meshMain" 
+                                Positions="0 0 0  1 0 0  0 1 0  1 1 0  0 0 1  1 0 1  0 1 1  1 1 1" 
+                                TriangleIndices="2 3 1  2 1 0  7 1 3  7 5 1  6 5 7  6 4 5  6 2 0  2 0 4  2 7 3  2 6 7  0 1 5  0 5 4"/>
+                    <!--<MeshGeometry3D x:Name="meshMain" 
+                                Positions="0 0 0  1 0 0  0 1 0  " 
+                                TriangleIndices="0 1 2"/>-->
+                    <!--<MeshGeometry3D x:Name="meshMain"
+                                 Positions="0 0 1  2 0 1  0 2 1  2 2 1"
+                                 TriangleIndices="0 1 2  1 3 2" />-->
+                  </GeometryModel3D.Geometry>
+                  <GeometryModel3D.Material>
+                    <DiffuseMaterial x:Name="matDiffuseMain">
+                      <DiffuseMaterial.Brush>
+                        <SolidColorBrush Color="Red"/>
+                      </DiffuseMaterial.Brush>
+                    </DiffuseMaterial>
+                  </GeometryModel3D.Material>
+                </GeometryModel3D>
+              </ModelVisual3D.Content>
+              <ModelVisual3D.Transform>
+                <RotateTransform3D>
+                  <RotateTransform3D.Rotation>
+                    <AxisAngleRotation3D x:Name="rotate" Axis="0 2 0" Angle="50"/>
+                  </RotateTransform3D.Rotation>
+                </RotateTransform3D>
+              </ModelVisual3D.Transform>
+            </ModelVisual3D>
+          </Viewport3D>
+          <!--<Viewport3D>
+						<Viewport3D.Camera>
+							<PerspectiveCamera Position="-40,40,40" LookDirection="53,-40,-40 " UpDirection="0,0,1" />
+						</Viewport3D.Camera>
+						<ModelVisual3D x:Name="MyModelVisual3D">
+							<ModelVisual3D.Content>
+								<Model3DGroup>
+									<DirectionalLight Color="White" Direction="-1,-1,-3" />
+									<GeometryModel3D>
+										<GeometryModel3D.Geometry>
+											<MeshGeometry3D Positions="
+												0,0,0 10,0,0 10,10,0 0,10,0 0,0,10, 10,0,10 10,10,10 0,10,10"
+                        TriangleIndices="0 1 3 1 2 3  0 4 3 4 7 3  4 6 7 4 5 6 
+                                         0 4 1 1 4 5  1 2 6 6 5 1  2 3 7 7 6 2"/>
+										</GeometryModel3D.Geometry>
+										<GeometryModel3D.Material>
+											<DiffuseMaterial Brush="Red"/>
+										</GeometryModel3D.Material>
+									</GeometryModel3D>
+								</Model3DGroup>
+							</ModelVisual3D.Content>
+						</ModelVisual3D>
+					</Viewport3D>-->
+          <Image x:Name="PlayIconImage" Source="pack://application:,,,/wpf-git;component/Images\play_icon.png" Height="50" Width="50" Opacity="0" Visibility="Visible"></Image>
 				</Grid>
 			</Border>
 
@@ -177,8 +245,8 @@
 					<Image Source="pack://application:,,,/wpf-git;component/Images\PinIn16.png" Height="16" Width="16" />
 				</Button>-->
 				<TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0,0,0">Sep. 19, 2012 14:15:50</TextBlock>
-				<Slider Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="125" Value="5" Margin="2"/>
-				<TextBlock Grid.Column="5" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0">-104.991367, 40.739472</TextBlock>
+        <Slider Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" Width="125" Margin="2" Maximum="360" Value="{Binding ElementName=rotate, Path=Angle}"/>
+        <TextBlock Grid.Column="5" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,0">-104.991367, 40.739472</TextBlock>
 			</Grid>
 		</Grid>
 	</Canvas>

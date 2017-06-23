@@ -303,8 +303,8 @@ namespace wpf_git
 				_timer.Tick -= _timer_Tick;
 				_timer = null;
 
-				_metadataViewerWindow.Close();
-				_metadataViewerWindow = null;
+				//_metadataViewerWindow.Close();
+				//_metadataViewerWindow = null;
 
 				//TryDispose(obj);
 			}
