@@ -54,6 +54,7 @@ namespace wpf_git
 		private string _quickLaunchPinImage = null;
 		private const string QuickLaunchPinImagePinnedPath = @"~\..\Images\PinIn16.png";
 		private const string QuickLaunchPinImageUnpinnedPath = @"~\..\Images\PinOut16.png";
+
 		private string _playIconImage = null;
 		private const string PlayIconImagePath = @"~\..\Images\play_icon.png";
 

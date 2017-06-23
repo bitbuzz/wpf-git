@@ -31,8 +31,8 @@ namespace wpf_git
 			WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			DataContext = new VideoPlayerViewModel();
 
-			//Shapes3DWindow shapes3DWindow = new Shapes3DWindow();
-			//shapes3DWindow.Show();
+			Shapes3DWindow shapes3DWindow = new Shapes3DWindow();
+			shapes3DWindow.Show();
 		}
 
 		private void DvrCtrlBorder_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

@@ -173,7 +173,6 @@
 					<ColumnDefinition Width="*"/>
 					<ColumnDefinition Width="Auto"/>
 				</Grid.ColumnDefinitions>
-
 				<!--<Button Grid.Column="0" Grid.Row="0" ToolTip="Open and close the DVR controls and video tools (Ctrl+Shift+S)" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0" Command="{Binding Path=ToggleDvrAndQuickLaunchCommand}" Background="Transparent" BorderBrush="Transparent" Height="19" Width="19">
 					<Image Source="pack://application:,,,/wpf-git;component/Images\PinIn16.png" Height="16" Width="16" />
 				</Button>-->
