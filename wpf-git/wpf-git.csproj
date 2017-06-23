@@ -160,6 +160,8 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\pause_icon.png" />
+    <Resource Include="Images\PinIn16.png" />
+    <Resource Include="Images\PinOut16.png" />
     <Content Include="Images\play_icon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
